@@ -103,6 +103,9 @@ const onFormSubmit = () => {
 const goToNextPage = () => {
     sessionStorage.removeItem("orderStore");
     resetShippingDetails();
+    Object.keys(initialValues).forEach(key => {
+        initialValues[key] = "";
+    });
     router.push({ name: "OrderSummary" });
 };
 </script>

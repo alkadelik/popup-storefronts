@@ -21,6 +21,7 @@ declare module 'vue' {
     ProductInfo: typeof import('./src/components/product-details/ProductInfo.vue')['default']
     ProductNavbar: typeof import('./src/components/product-details/ProductNavbar.vue')['default']
     ProductVariantsForm: typeof import('./src/components/product-details/ProductVariantsForm.vue')['default']
+    RadioButton: typeof import('primevue/radiobutton')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     Select: typeof import('primevue/select')['default']
