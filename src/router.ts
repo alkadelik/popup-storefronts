@@ -8,41 +8,31 @@ const routes = [
     },
     {
         path: "/:slug",
-        component: () => import("./layouts/NavbarLayout.vue"),
-        children: [
-            { path: "", component: () => import("./views/HomeView.vue"), name: "Home" },
-            {
-                path: "store",
-                component: () => import("./views/StoreHome.vue"),
-                meta: {
-                    title: "Store",
-                },
-                name: "Store",
-            },
-        ],
+        component: () => import("./views/StoreHome.vue"),
+        name: "StoreHome",
     },
     {
-        path: "/:slug/store/product",
+        path: "/:slug/product",
         component: () => import("./views/ProductDetails.vue"),
         name: "ProductDetail",
     },
     {
-        path: "/:slug/store/cart",
+        path: "/:slug/cart",
         component: () => import("./views/CartPage.vue"),
         name: "Cart",
     },
     {
-        path: "/:slug/store/order-successful/:id",
+        path: "/:slug/order-successful/:id",
         component: () => import("./views/OrderSuccessful.vue"),
         name: "OrderSuccessful",
     },
     {
-        path: "/:slug/store/order/summary",
+        path: "/:slug/order/summary",
         component: () => import("./views/OrderSummary.vue"),
         name: "OrderSummary",
     },
     {
-        path: "/:slug/store/order/shipping",
+        path: "/:slug/order/shipping",
         component: () => import("./views/ShippingDetails.vue"),
         name: "ShippingDetails",
     },
