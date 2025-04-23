@@ -15,8 +15,6 @@ declare module 'vue' {
     FooterComponent: typeof import('./src/components/layouts/FooterComponent.vue')['default']
     Form: typeof import('@primevue/forms/form')['default']
     HomeSkeleton: typeof import('./src/components/skeletons/HomeSkeleton.vue')['default']
-    InputNumber: typeof import('primevue/inputnumber')['default']
-    InputText: typeof import('primevue/inputtext')['default']
     Message: typeof import('primevue/message')['default']
     Navbar: typeof import('./src/components/layouts/Navbar.vue')['default']
     ProductCard: typeof import('./src/components/ProductCard.vue')['default']
@@ -24,7 +22,6 @@ declare module 'vue' {
     ProductInfo: typeof import('./src/components/product-details/ProductInfo.vue')['default']
     ProductNavbar: typeof import('./src/components/product-details/ProductNavbar.vue')['default']
     ProductVariantsForm: typeof import('./src/components/product-details/ProductVariantsForm.vue')['default']
-    RadioButton: typeof import('primevue/radiobutton')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     Select: typeof import('primevue/select')['default']
@@ -37,7 +34,6 @@ declare module 'vue' {
     SummaryItem: typeof import('./src/components/order-summary/SummaryItem.vue')['default']
     SummaryTotal: typeof import('./src/components/order-summary/SummaryTotal.vue')['default']
     SwiperCarousel: typeof import('./src/components/SwiperCarousel.vue')['default']
-    Toast: typeof import('primevue/toast')['default']
     ToastSuccess: typeof import('./src/components/utils/ToastSuccess.vue')['default']
   }
 }
