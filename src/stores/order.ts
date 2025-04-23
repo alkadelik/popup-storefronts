@@ -1,9 +1,6 @@
 import { defineStore } from "pinia";
-import { reactive, computed } from "vue";
-import { useStoreInfo } from "../stores/storeInfo";
-import type { StoreInfo, ShippingDetails } from "../includes/interfaces";
-
-const {storeInfo} = useStoreInfo();
+import { reactive } from "vue";
+import type { ShippingDetails } from "../includes/interfaces";
 
 export const useOrderStore = defineStore(
     "order",
@@ -13,17 +10,7 @@ export const useOrderStore = defineStore(
             lastName: "",
             email: "",
             phoneNumber: "",
-            shippingMethod: "",
-            location: "",
-            address: "",
-        });
-
-        const deliveryFee = computed(() => {
-            const amount = (storeInfo as StoreInfo)?.shipping_prices?.find(
-                (area: any) => area.area === shippingDetails.location,
-            )?.amount;
-
-            return Number(amount) || 0;
+            instagram_handle: "",
         });
 
         const resetShippingDetails = () => {
@@ -32,15 +19,12 @@ export const useOrderStore = defineStore(
                 lastName: "",
                 email: "",
                 phoneNumber: "",
-                shippingMethod: "",
-                location: "",
-                address: "",
+                instagram_handle: "",
             });
         }
 
         return {
             shippingDetails,
-            deliveryFee,
             resetShippingDetails,
         };
     },

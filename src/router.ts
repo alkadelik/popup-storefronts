@@ -9,7 +9,7 @@ const routes = [
     {
         path: "/:slug",
         component: () => import("./views/StoreHome.vue"),
-        name: "StoreHome",
+        name: "Store",
     },
     {
         path: "/:slug/product",

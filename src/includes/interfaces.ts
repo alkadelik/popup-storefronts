@@ -101,7 +101,5 @@ export interface ShippingDetails {
     lastName: string;
     email: string;
     phoneNumber: string;
-    shippingMethod: string;
-    location: string;
-    address: string;
+    instagram_handle: string;
 }

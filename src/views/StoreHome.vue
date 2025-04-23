@@ -1,33 +1,37 @@
 <template>
     <div class="store-home pb-4">
-        <div class="ps-4 flex overflow-x-auto scrollbar-hide">
-            <div
-                :class="[
-                    'tab border-b-2 py-2 px-3 cursor-pointer flex items-center',
-                    productStore.activeTab === 'all'
-                        ? 'text-spanish-viridian border-spanish-viridian'
-                        : 'text-manatee border-manatee',
-                ]"
-                @click="productStore.toggleTab('all')"
-            >
-                <p>All</p>
-            </div>
-            <div
-                v-for="category in storeInfo.categories"
-                :class="[
-                    'tab border-b-2 py-0 px-3 cursor-pointer flex items-center',
-                    productStore.activeTab === category.category
-                        ? 'text-spanish-viridian border-spanish-viridian'
-                        : 'text-manatee border-manatee',
-                ]"
-                @click="productStore.toggleTab(category.category)"
-            >
-                <p>{{ category.category }}</p>
-            </div>
-        </div>
+        <ToastSuccess :visible="(visible = 'success')" @close="visible = false" :text="toastText" />
 
-        <div class="py-5 px-4">
-            <h4 class="font-normal">Shop</h4>
+        <div class="py-6 px-4 flex gap-4 items-center">
+            <div class="h-16 w-16 rounded-md">
+                <img :src="storeInfo.store_logo" alt="store logo" class="h-full w-full object-cover rounded-md" />
+            </div>
+
+            <div class="h-16 flex flex-col justify-between py-1">
+                <h6 class="text-dark-slate-gray">{{ storeInfo.store_name }}</h6>
+                <div class="flex gap-1.5 items-center">
+                    <p class="text-xanadu">{{ storeInfo.phone_number }}</p>
+                    <svg 
+                        width="14" 
+                        height="14" 
+                        viewBox="0 0 14 14" 
+                        fill="none" 
+                        xmlns="http://www.w3.org/2000/svg" 
+                        class="h-4 w-4 cursor-pointer"
+                        @click="copyToClipboard(storeInfo.phone_number)"
+                    >
+                        <path
+                            d="M9.33317 7.525V9.97501C9.33317 12.0167 8.5165 12.8333 6.47484 12.8333H4.02484C1.98317 12.8333 1.1665 12.0167 1.1665 9.97501V7.525C1.1665 5.48334 1.98317 4.66667 4.02484 4.66667H6.47484C8.5165 4.66667 9.33317 5.48334 9.33317 7.525Z"
+                            fill="#92AAA3"
+                        />
+                        <path
+                            opacity="0.4"
+                            d="M9.97486 1.16667H7.52486C5.51236 1.16667 4.6957 1.96584 4.67236 3.9375H6.47486C8.92486 3.9375 10.0624 5.075 10.0624 7.525V9.3275C12.034 9.30417 12.8332 8.4875 12.8332 6.475V4.025C12.8332 1.98334 12.0165 1.16667 9.97486 1.16667Z"
+                            fill="#92AAA3"
+                        />
+                    </svg>
+                </div>
+            </div>
         </div>
 
         <div class="pb-4 px-4 flex justify-between items-center">
@@ -148,6 +152,8 @@ import { useProductStore } from "../stores/product";
 import { useCartStore } from "../stores/cart";
 import SortPopup from "../components/SortPopup.vue";
 import { useRoute } from "vue-router";
+import ToastSuccess from "../components/utils/ToastSuccess.vue";
+import { useToast } from "primevue/usetoast";
 
 const route = useRoute();
 const currentSlug = route.params.slug;
@@ -155,8 +161,24 @@ const sortIsOpen = ref(false);
 const { storeInfo } = useStoreInfo();
 const productStore = useProductStore();
 const cartStore = useCartStore();
+const toast = useToast();
+const toastText = ref("");
+const visible = ref(false);
 
 const totalProducts = computed(() => cartStore.cart.reduce((sum, item) => sum + item.selected_quantity, 0));
+
+const copyToClipboard = (text) => {
+    navigator.clipboard.writeText(text).then(() => {
+        toastText.value = "Copied to clipboard!";
+        toast.add({
+            severity: "custom",
+            life: 2000,
+            group: "headless",
+            styleClass: "w-full",
+        });
+        visible.value = "success";
+    })
+};
 </script>
 
 <style>

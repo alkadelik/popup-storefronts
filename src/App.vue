@@ -2,8 +2,7 @@
     <div class="font-aeonik h-screen flex justify-center items-center">
         <div class="md:w-lg lg:w-sm w-full h-full max-h-screen overflow-y-auto scrollbar-hide">
             <div v-if="isLoading && routeName">
-                <HomeSkeleton v-if="routeName === 'Home'" />
-                <StoreHomeSkeleton v-else />
+                <StoreHomeSkeleton />
                 <!-- rest of the skeletons -->
             </div>
             <router-view v-slot="{ Component }" v-else>
@@ -22,7 +21,6 @@ import { ref, watch, onMounted, computed } from "vue";
 import { useStoreInfo } from "./stores/storeInfo.ts";
 import { useApiCalls } from "./composables/useApiCalls.ts";
 import { useRoute } from "vue-router";
-import HomeSkeleton from "./components/skeletons/HomeSkeleton.vue";
 import StoreHomeSkeleton from "./components/skeletons/StoreHomeSkeleton.vue";
 
 const { storeInfo, updateStoreInfo } = useStoreInfo();

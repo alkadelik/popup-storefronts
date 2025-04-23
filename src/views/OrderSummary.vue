@@ -8,9 +8,7 @@
         <div class="flex-1 overflow-y-auto px-4 pt-2 pb-4">
             <SummaryItem v-for="item in cart" :key="item.id" :item="item" />
 
-            <ShippingSummary :shippingDetails="shippingDetails" />
-
-            <ShippingMethod :shippingDetails="shippingDetails" :storeInfo="storeInfo" />
+            <ShippingSummary v-if="Object.values(shippingDetails).some(field => field !== '')" :shippingDetails="shippingDetails" />
         </div>
 
         <SummaryTotal
@@ -35,7 +33,6 @@ import { useUtils } from "../composables/useUtils";
 import Spinner from "../components/utils/Spinner.vue";
 import SummaryItem from "../components/order-summary/SummaryItem.vue";
 import ShippingSummary from "../components/order-summary/ShippingSummary.vue";
-import ShippingMethod from "../components/order-summary/ShippingMethod.vue";
 import SummaryTotal from "../components/order-summary/SummaryTotal.vue";
 import { useRoute } from "vue-router";
 

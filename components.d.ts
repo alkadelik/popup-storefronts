@@ -13,7 +13,8 @@ declare module 'vue' {
     CartPageItem: typeof import('./src/components/CartPageItem.vue')['default']
     Dialog: typeof import('primevue/dialog')['default']
     Form: typeof import('@primevue/forms/form')['default']
-    HomeSkeleton: typeof import('./src/components/skeletons/HomeSkeleton.vue')['default']
+    InputNumber: typeof import('primevue/inputnumber')['default']
+    InputText: typeof import('primevue/inputtext')['default']
     Message: typeof import('primevue/message')['default']
     ProductCard: typeof import('./src/components/ProductCard.vue')['default']
     ProductImage: typeof import('./src/components/product-details/ProductImage.vue')['default']
@@ -23,7 +24,6 @@ declare module 'vue' {
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     Select: typeof import('primevue/select')['default']
-    ShippingMethod: typeof import('./src/components/order-summary/ShippingMethod.vue')['default']
     ShippingSummary: typeof import('./src/components/order-summary/ShippingSummary.vue')['default']
     Skeleton: typeof import('primevue/skeleton')['default']
     SortPopup: typeof import('./src/components/SortPopup.vue')['default']
@@ -32,6 +32,7 @@ declare module 'vue' {
     SummaryItem: typeof import('./src/components/order-summary/SummaryItem.vue')['default']
     SummaryTotal: typeof import('./src/components/order-summary/SummaryTotal.vue')['default']
     SwiperCarousel: typeof import('./src/components/SwiperCarousel.vue')['default']
+    Toast: typeof import('primevue/toast')['default']
     ToastSuccess: typeof import('./src/components/utils/ToastSuccess.vue')['default']
   }
 }

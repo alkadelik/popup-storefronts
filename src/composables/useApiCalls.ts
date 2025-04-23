@@ -24,6 +24,7 @@ export function useApiCalls() {
                     updateStoreInfo(response.data);
                     setFavicon(response.data.store_logo);
                     setTitle(`${response.data.store_name} -- Powered by Leyyow!`);
+                    console.log(response.data);
                     return response.data;
                 } else {
                     console.log(response);

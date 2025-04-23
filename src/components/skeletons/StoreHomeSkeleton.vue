@@ -1,8 +1,13 @@
 <template>
     <div class="p-4 h-screen overflow-hidden">
-        <Skeleton width="5rem" height="2rem" class="mb-10"></Skeleton>
-        <Skeleton height="2rem" class="w-screen mb-5"></Skeleton>
-        <Skeleton width="5rem" height="2.5rem" class="mb-2"></Skeleton>
+        <div class="py-3 flex items-center gap-3">
+            <Skeleton width="4.5rem" height="4.5rem" class="mb-2"></Skeleton>
+
+            <div class="flex flex-col gap-1 h-16 justify-between">
+                <Skeleton width="8rem" height="1.7rem"></Skeleton>
+                <Skeleton width="6rem" height="1.2rem"></Skeleton>
+            </div>
+        </div>
         <div class="flex gap-3 py-6">
             <Skeleton height="2rem" class="w-9/12"></Skeleton>
             <Skeleton height="2rem" width="2rem"></Skeleton>

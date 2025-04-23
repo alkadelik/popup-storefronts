@@ -1,5 +1,5 @@
 <template>
-    <div class="py-4 my-4 border-platinum border-t border-b flex flex-col gap-2.5">
+    <div class="py-4 my-4 border-platinum border-t flex flex-col gap-2.5">
         <div class="flex justify-between items-center mb-1">
             <h6>Shipping Information</h6>
             <router-link :to="{ name: 'ShippingDetails', params: { slug: currentSlug } }" class="cursor-pointer">
@@ -29,9 +29,10 @@
             </router-link>
         </div>
 
-        <p>{{ shippingDetails.firstName }} {{ shippingDetails.lastName }}</p>
-        <p>{{ shippingDetails.email }}</p>
-        <p>{{ shippingDetails.phoneNumber }}</p>
+        <p v-if="shippingDetails.firstName || shippingDetails.lastName">{{ shippingDetails.firstName }} {{ shippingDetails.lastName }}</p>
+        <p v-if="shippingDetails.email">{{ shippingDetails.email }}</p>
+        <p v-if="shippingDetails.phoneNumber">{{ shippingDetails.phoneNumber }}</p>
+        <p v-if="shippingDetails.instagram_handle">{{ shippingDetails.instagram_handle }}</p>
     </div>
 </template>
 
