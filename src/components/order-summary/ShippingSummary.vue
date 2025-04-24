@@ -1,7 +1,7 @@
 <template>
     <div class="py-4 my-4 border-platinum border-t flex flex-col gap-2.5">
         <div class="flex justify-between items-center mb-1">
-            <h6>Shipping Information</h6>
+            <h6>Customer Information</h6>
             <router-link :to="{ name: 'ShippingDetails', params: { slug: currentSlug } }" class="cursor-pointer">
                 <svg
                     width="20"
