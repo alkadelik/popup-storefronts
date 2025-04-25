@@ -4,7 +4,7 @@ import { createWebHistory, createRouter } from "vue-router";
 const routes = [
     {
         path: "/",
-        redirect: "/demo",
+        redirect: "/33ba20b350",
     },
     {
         path: "/:slug",
