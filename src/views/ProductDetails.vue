@@ -49,11 +49,13 @@ import CartButton from "../components/product-details/CartButton.vue";
 import { useProductStore } from "../stores/product";
 import { useToast } from "primevue/usetoast";
 import { useCartStore } from "../stores/cart";
+import { useStoreInfo } from "../stores/storeInfo";
 import type { Product } from "../includes/interfaces";
 
 // data 
 const productStore = useProductStore();
 const cartStore = useCartStore();
+const { storeInfo } = useStoreInfo();
 const toast = useToast();
 const toastText = ref("");
 const visible = ref<String|Boolean>(false);
@@ -97,6 +99,7 @@ const price = (product: Product) => {
 const stock = (product: Product) => {
     getInitialValues(product.id);
     let skuObject = null;
+    const id = storeInfo.event.id;
 
     if (variantNames(product).length) {
         skuObject = (product.sku || []).find((item) => {
@@ -106,9 +109,15 @@ const stock = (product: Product) => {
                 item.option3 === formState[product.id].variant3
             );
         });
+    } else {
+        skuObject = product.sku[0];
     }
 
-    return skuObject ? skuObject.qty : product.total_stock;
+    if (skuObject && !skuObject.events_qty) {
+        return 0;
+    }
+    
+    return skuObject ? skuObject.events_qty[id] : 0;
 };
 
 const sku = (product: Product) => {

@@ -1,11 +1,10 @@
 <template>
     <div class="font-aeonik h-screen flex justify-center items-center">
         <div class="md:w-lg lg:w-sm w-full h-full max-h-screen overflow-y-auto scrollbar-hide">
-            <div v-if="isLoading && routeName">
+            <!-- <div v-if="isLoading && routeName">
                 <StoreHomeSkeleton />
-                <!-- rest of the skeletons -->
-            </div>
-            <router-view v-slot="{ Component }" v-else>
+            </div> -->
+            <router-view v-slot="{ Component }">
                 <transition name="fade">
                     <keep-alive>
                         <component :is="Component"></component>
@@ -30,8 +29,8 @@ const merchantSlug = computed(() => route.params.slug);
 console.log(merchantSlug.value);
 
 // ✅ Call useQuery immediately with the computed slug
-const storeQuery = fetchStoreInfo(merchantSlug);
+// const storeQuery = fetchStoreInfo(merchantSlug);
 
-const isLoading = computed(() => storeQuery.isLoading.value);
-const routeName = computed(() => route.name);
+// const isLoading = computed(() => storeQuery.isLoading.value);
+// const routeName = computed(() => route.name);
 </script>

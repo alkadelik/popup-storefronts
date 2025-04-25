@@ -25,7 +25,7 @@
             :total-amount="totalAmount"
             :shipping-details="shippingDetails"
             :is-pending="isPending"
-            @checkout="handleCheckout"
+            @checkout="visibleBottom = true"
         />
 
         <Drawer
@@ -64,7 +64,12 @@
                 </label>
             </div>
 
-            <Button class="text-white bg-black w-full border-0 py-3 mt-4" label="continue"  />
+            <Button class="text-white bg-black w-full border-0 py-3 mt-4" @click="handleCheckout" >
+                <div role="status" v-if="isPending">
+                    <Spinner />
+                </div>
+                <span v-else>continue</span>
+            </Button>
         </Drawer>
     </div>
 </template>
@@ -126,7 +131,7 @@ const variantNames = (product) => {
     return names.length ? names : ["", "", ""];
 };
 
-const orderRef = generateOrderRef(storeInfo.store, cart);
+const orderRef = generateOrderRef(storeInfo.event.store.id, cart);
 const orderDate = new Date().toISOString().split("T")[0];
 
 const payloadItems = cart.map((item, i) => {
@@ -186,11 +191,11 @@ const handleCheckout = () => {
         unique_items: uniqueProductCount(),
         items: [...payloadItems],
         redirect_url: `${window.location.origin}/${currentSlug}/store/order-successful/${orderRef}`,
+        event: storeInfo.event.id,
     };
 
     console.log(payload);
-    // useCreateOrder(payload);
-    visibleBottom.value = true;
+    useCreateOrder(payload);
 };
 </script>
 

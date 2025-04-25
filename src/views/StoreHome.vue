@@ -4,13 +4,13 @@
 
         <div class="py-6 px-4 flex gap-4 items-center">
             <div class="h-16 w-16 rounded-md">
-                <img :src="storeInfo.store_logo" alt="store logo" class="h-full w-full object-cover rounded-md" />
+                <img :src="storeInfo.event.store.logo" alt="store logo" class="h-full w-full object-cover rounded-md" />
             </div>
 
             <div class="h-16 flex flex-col justify-between py-1">
-                <h6 class="text-dark-slate-gray">{{ storeInfo.store_name }}</h6>
+                <h6 class="text-dark-slate-gray">{{ storeInfo.event.store.store_name }}</h6>
                 <div class="flex gap-1.5 items-center">
-                    <p class="text-xanadu">{{ storeInfo.phone_number }}</p>
+                    <p class="text-xanadu">{{ storeInfo.event.store.phone_number }}</p>
                     <svg 
                         width="14" 
                         height="14" 

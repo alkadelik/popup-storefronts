@@ -6,38 +6,29 @@ export interface Selections {
 }
 
 export interface StoreInfo {
-    id: number;
-    title: string;
-    slug: string;
-    subtitle: string;
-    image1: string;
-    image2: string;
-    image3: string | null;
-    image4: string | null;
-    image5: string | null;
+    event: {
+        id: number;
+        event_ref: string;
+        event_name: string;
+        start_date: string;
+        end_date: string;
+        participant_fee: number;
+        qr_code: string;
+        created: string;
+        store: {
+            id: number;
+            store_name: string;
+            logo: string | null;
+            opening_time: string;
+            website: string;
+            instagram: string;
+            twitter: string;
+            facebook: string;
+            currency: string;
+            phone_number: string;
+        };
+    };
     products: Product[];
-    categories: { category: string }[];
-    benefit_page_title: string;
-    benefit_page_subtitle: string;
-    pages: { id: number; title: string; content: string; created: string; updated: string }[];
-    reviews: any[];
-    best_sellers: Product[];
-    store: number;
-    store_name: string;
-    store_slug: string;
-    store_logo: string;
-    industry: string;
-    address: string;
-    email: string;
-    phone_number: string;
-    use_custom_url: boolean;
-    custom_url: string;
-    country: string;
-    currency: string;
-    always_open: boolean;
-    opening_time: string | null;
-    closing_time: string | null;
-    shipping_prices: { area: string; amount: string }[];
 }
 
 export interface Product {
@@ -70,6 +61,7 @@ export interface Product {
     combinations: string | null;
     images: { id: number; type: string; image: string; name: string | null; store: string; product: number }[];
     sku: Sku[];
+    events: any[];
 }
 
 export interface Sku {
@@ -83,6 +75,7 @@ export interface Sku {
     sku_discount_type: string;
     price: number;
     qty: number;
+    events_qty: null | any;
 }
 
 export interface CartItem extends Product {

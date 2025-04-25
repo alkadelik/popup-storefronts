@@ -7,7 +7,7 @@ import { computed } from "vue";
 
 export function useApiCalls() {
     const { updateStoreInfo } = useStoreInfo();
-    const { setFavicon, setTitle } = useUtils();
+    const { setTitle } = useUtils();
     
     // Fetch store info (requires merchantSlug)
     const fetchStoreInfo = (merchantSlug: { value: string; }) =>
@@ -22,8 +22,7 @@ export function useApiCalls() {
 
                 if (response.status === 200) {
                     updateStoreInfo(response.data);
-                    setFavicon(response.data.store_logo);
-                    setTitle(`${response.data.store_name} -- Powered by Leyyow!`);
+                    setTitle(`${response.data.event.store.store_name} -- Powered by Leyyow!`);
                     console.log(response.data);
                     return response.data;
                 } else {
@@ -41,9 +40,9 @@ export function useApiCalls() {
             mutationFn: async (data: any) => {
                 return await apiPost("/inventory/orders/public/", data);
             },
-            onSuccess: async (orderData: any) => {
+            onSuccess: async (res: any) => {
                 queryClient.refetchQueries({ queryKey: ["storeInfo"] });
-                window.location.href = `https://checkout.paystack.com/${orderData.data.access_code}`;
+                console.log(res);
             },
         });
     }
