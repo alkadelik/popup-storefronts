@@ -3,7 +3,7 @@ import { useStoreInfo } from "../stores/storeInfo";
 
 export function useUtils() {
     const { storeInfo } = useStoreInfo();
-    const currency = (storeInfo as StoreInfo)?.currency || "NGN";
+    const currency = (storeInfo as StoreInfo)?.event?.store.currency || "NGN";
 
     const convertToNaira = (amount: number) => { 
         return amount.toLocaleString("en-NG", { style: "currency", currency: currency });

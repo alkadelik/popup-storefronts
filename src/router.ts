@@ -22,7 +22,7 @@ const routes = [
         name: "Cart",
     },
     {
-        path: "/:slug/order-successful/:id",
+        path: "/:slug/store/order-successful/:id",
         component: () => import("./views/OrderSuccessful.vue"),
         name: "OrderSuccessful",
     },

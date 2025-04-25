@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/vue-query";
+import { useMutation, useQuery } from "@tanstack/vue-query";
 import { apiGet, apiPost } from "../includes/api";
 import { useStoreInfo } from "../stores/storeInfo";
 import { useUtils } from "./useUtils";
@@ -8,43 +8,40 @@ import { computed } from "vue";
 export function useApiCalls() {
     const { updateStoreInfo } = useStoreInfo();
     const { setTitle } = useUtils();
-    
-    // Fetch store info (requires merchantSlug)
-    const fetchStoreInfo = (merchantSlug: { value: string; }) =>
-        useQuery({
-            queryKey: ["storeInfo", merchantSlug],
-            queryFn: async () => {
-                if (!merchantSlug.value) throw new Error("Merchant slug is required");
-                const response = (await apiGet(`/account/store-website/public/${merchantSlug.value}/`)) as {
-                    status: number;
-                    data: StoreInfo;
-                };
 
-                if (response.status === 200) {
-                    updateStoreInfo(response.data);
-                    setTitle(`${response.data.event.store.store_name} -- Powered by Leyyow!`);
-                    console.log(response.data);
-                    return response.data;
-                } else {
-                    console.log(response);
-                    throw new Error("Failed to fetch store info");
-                }
+    // Fetch store info (requires eventRef)
+    const fetchStoreInfo = (eventRef: { value: string }) =>
+        useQuery({
+            queryKey: ["storeInfo", eventRef],
+            queryFn: async () => {
+                if (!eventRef.value) throw new Error("Event ref is required");
+                const response = await apiGet<StoreInfo>(`/inventory/event/${eventRef.value}/`);
+                console.log("response", response);
+                setTitle(`${response.event.store.store_name} -- Powered by Leyyow!`);
+                updateStoreInfo(response);
+                return response;
+
+                // if (response.status === 200) {
+                //     updateStoreInfo(response.data);
+                //     setTitle(`${response.data.event.store.store_name} -- Powered by Leyyow!`);
+                //     console.log("response", response.data);
+                //     console.log("info", storeInfo);
+                //     return response.data;
+                // } else {
+                //     console.log(response);
+                //     throw new Error("Failed to fetch store info");
+                // }
             },
-            enabled: computed(() => !!merchantSlug.value), // Only run if merchantSlug exists
+            enabled: computed(() => !!eventRef.value), // Only run if eventRef exists
         });
 
     const createOrder = () => {
-        const queryClient = useQueryClient();
         return useMutation({
             mutationKey: ["createOrder"],
             mutationFn: async (data: any) => {
                 return await apiPost("/inventory/orders/public/", data);
             },
-            onSuccess: async (res: any) => {
-                queryClient.refetchQueries({ queryKey: ["storeInfo"] });
-                console.log(res);
-            },
         });
-    }
+    };
     return { fetchStoreInfo, createOrder };
 }

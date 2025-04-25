@@ -16,7 +16,7 @@
                 <!-- product image  -->
                 <ProductImage :filteredProduct="filteredProduct" />
 
-                <ProductInfo :filteredProduct="filteredProduct" @share-clicked="shareUrl" />
+                <ProductInfo :filteredProduct="filteredProduct" :price="price" @share-clicked="shareUrl" />
 
                 <ProductVariantsForm
                     :filteredProduct="filteredProduct"
@@ -50,17 +50,19 @@ import { useProductStore } from "../stores/product";
 import { useToast } from "primevue/usetoast";
 import { useCartStore } from "../stores/cart";
 import { useStoreInfo } from "../stores/storeInfo";
-import type { Product } from "../includes/interfaces";
+import type { Product, StoreInfo } from "../includes/interfaces";
 
-// data 
+// data
 const productStore = useProductStore();
 const cartStore = useCartStore();
 const { storeInfo } = useStoreInfo();
 const toast = useToast();
 const toastText = ref("");
-const visible = ref<String|Boolean>(false);
+const visible = ref<String | Boolean>(false);
 const error = ref(false);
-const formState = reactive<Record<number | string, { variant1: string; variant2: string; variant3: string; quantity: number }>>({
+const formState = reactive<
+    Record<number | string, { variant1: string; variant2: string; variant3: string; quantity: number }>
+>({
     default: { variant1: "", variant2: "", variant3: "", quantity: 1 },
 });
 
@@ -68,7 +70,7 @@ const formState = reactive<Record<number | string, { variant1: string; variant2:
 const filteredProducts = computed(() => productStore.filteredProducts);
 const totalProducts = computed(() => cartStore.cart.reduce((sum, item) => sum + item.selected_quantity, 0));
 
-// methods 
+// methods
 const variantNames = (product: Product) => {
     const names = product.variants.split(",").filter(Boolean);
     return names;
@@ -82,6 +84,7 @@ const optionsArray = (option: string) => {
 const price = (product: Product) => {
     getInitialValues(product.id);
     let skuObject = null;
+    const id = (storeInfo as StoreInfo)?.event.id;
 
     if (variantNames(product).length) {
         skuObject = product.sku.find((item) => {
@@ -91,15 +94,17 @@ const price = (product: Product) => {
                 item.option3 === formState[product.id].variant3
             );
         });
+    } else {
+        skuObject = product.sku[0];
     }
 
-    return skuObject ? skuObject.price : product.price;
+    return skuObject?.event_data?.[id]?.price || product.price;
 };
 
 const stock = (product: Product) => {
     getInitialValues(product.id);
     let skuObject = null;
-    const id = storeInfo.event.id;
+    const id = (storeInfo as StoreInfo)?.event.id;
 
     if (variantNames(product).length) {
         skuObject = (product.sku || []).find((item) => {
@@ -113,11 +118,11 @@ const stock = (product: Product) => {
         skuObject = product.sku[0];
     }
 
-    if (skuObject && !skuObject.events_qty) {
+    if (skuObject && !skuObject.event_data) {
         return 0;
     }
-    
-    return skuObject ? skuObject.events_qty[id] : 0;
+
+    return skuObject?.event_data?.[id]?.qty || 0;
 };
 
 const sku = (product: Product) => {
@@ -157,7 +162,7 @@ const getResolverForProduct = (product: Product) => {
     };
 };
 
-const resolver = ({ values, product }: { values: Record<string, any>, product: Product }) => {
+const resolver = ({ values, product }: { values: Record<string, any>; product: Product }) => {
     const errors: Record<string, { message: string }[]> = {};
     const variants = variantNames(product);
 
@@ -194,7 +199,13 @@ const shareUrl = (productId: number) => {
     }
 };
 
-const onFormSubmit = ({ valid }: { valid: boolean }, product: Product, variantPrice: number, stockLeft: number, sku: number) => {
+const onFormSubmit = (
+    { valid }: { valid: boolean },
+    product: Product,
+    variantPrice: number,
+    stockLeft: number,
+    sku: number,
+) => {
     if (stockLeft === 0) {
         error.value = true;
         toast.add({ severity: "info", detail: "Item is not available in stock", life: 1000 });

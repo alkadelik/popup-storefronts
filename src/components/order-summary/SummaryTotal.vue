@@ -41,10 +41,6 @@ defineProps({
     cartTotal: Number,
     deliveryFee: Number,
     totalAmount: String,
-    shippingDetails: {
-        type: Object,
-        required: true,
-    },
     isPending: Boolean,
 });
 

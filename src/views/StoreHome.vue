@@ -2,15 +2,15 @@
     <div class="store-home pb-4">
         <ToastSuccess :visible="(visible = 'success')" @close="visible = false" :text="toastText" />
 
-        <div class="py-6 px-4 flex gap-4 items-center">
+        <div class="py-6 px-4 flex gap-4 items-center" v-if="storeInfo?.event?.store">
             <div class="h-16 w-16 rounded-md">
                 <img :src="storeInfo.event.store.logo" alt="store logo" class="h-full w-full object-cover rounded-md" />
             </div>
 
             <div class="h-16 flex flex-col justify-between py-1">
                 <h6 class="text-dark-slate-gray">{{ storeInfo.event.store.store_name }}</h6>
-                <div class="flex gap-1.5 items-center">
-                    <p class="text-xanadu">{{ storeInfo.event.store.phone_number }}</p>
+                <div class="flex gap-1.5 items-center" v-if="storeInfo.event.store.phone1">
+                    <p class="text-xanadu">{{ storeInfo.event.store.phone1 }}</p>
                     <svg 
                         width="14" 
                         height="14" 
@@ -18,7 +18,7 @@
                         fill="none" 
                         xmlns="http://www.w3.org/2000/svg" 
                         class="h-4 w-4 cursor-pointer"
-                        @click="copyToClipboard(storeInfo.phone_number)"
+                        @click="copyToClipboard(storeInfo.event.store.phone1)"
                     >
                         <path
                             d="M9.33317 7.525V9.97501C9.33317 12.0167 8.5165 12.8333 6.47484 12.8333H4.02484C1.98317 12.8333 1.1665 12.0167 1.1665 9.97501V7.525C1.1665 5.48334 1.98317 4.66667 4.02484 4.66667H6.47484C8.5165 4.66667 9.33317 5.48334 9.33317 7.525Z"

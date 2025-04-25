@@ -17,6 +17,23 @@ export const useProductStore = defineStore("product", () => {
         (newInventory) => {
             if (newInventory) {
                 originalInventory.value = [...newInventory]; // Store original order
+                const eventId = storeInfo?.event?.id; // Get the event ID
+
+                if (eventId) {
+                    newInventory.forEach((product) => {
+                        if (product.sku && Array.isArray(product.sku)) {
+                            for (const sku of product.sku) {
+                                if (sku.event_data && Object.keys(sku.event_data).length > 0) {
+                                    const eventData = sku.event_data[eventId];
+                                    if (eventData && eventData.price !== undefined) {
+                                        product.price = eventData.price; // Set the product price
+                                        break; // Exit the loop once the price is set
+                                    }
+                                }
+                            }
+                        }
+                    });
+                }
                 inventory.value = [...newInventory]; // Copy data for modifications
             }
         },

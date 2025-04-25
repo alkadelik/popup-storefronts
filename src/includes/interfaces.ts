@@ -13,19 +13,19 @@ export interface StoreInfo {
         start_date: string;
         end_date: string;
         participant_fee: number;
-        qr_code: string;
+        qr_code: string | null;
         created: string;
         store: {
             id: number;
             store_name: string;
             logo: string | null;
-            opening_time: string;
+            opening_time: string | null;
             website: string;
             instagram: string;
             twitter: string;
             facebook: string;
             currency: string;
-            phone_number: string;
+            phone1?: string;
         };
     };
     products: Product[];
@@ -75,7 +75,12 @@ export interface Sku {
     sku_discount_type: string;
     price: number;
     qty: number;
-    events_qty: null | any;
+    event_data: null | {
+        [eventId: string]: {
+            qty: number;
+            price: number;
+        };
+    };
 }
 
 export interface CartItem extends Product {

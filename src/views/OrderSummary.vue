@@ -21,7 +21,6 @@
         <SummaryTotal
             :total-products="totalProducts"
             :cart-total="cartTotal"
-            :Offline-fee="OfflineFee"
             :total-amount="totalAmount"
             :shipping-details="shippingDetails"
             :is-pending="isPending"
@@ -33,19 +32,13 @@
             header="Payment Method"
             position="bottom"
             style="height: auto"
-            class="!rounded-md !mx-2 !my-2 "
+            class="!rounded-md !mx-2 !my-2"
         >
-
             <div class="flex gap-3">
                 <label for="Offline" class="w-full cursor-pointer p-3 rounded-md bg-anti-flash-white block">
                     <div class="flex justify-between items-center">
                         <span>Pay Offline</span>
-                        <RadioButton
-                            v-model="paymentMethod"
-                            inputId="Offline"
-                            name="paymentMethod"
-                            value="Offline"
-                        />
+                        <RadioButton v-model="paymentMethod" inputId="Offline" name="paymentMethod" value="Offline" />
                     </div>
                     <p class="text-granite-gray leading-none text-xs mt-2">Cash, POS, or Transfer</p>
                 </label>
@@ -53,18 +46,13 @@
                 <label for="Online" class="w-full cursor-pointer p-3 rounded-md bg-anti-flash-white block">
                     <div class="flex justify-between items-center">
                         <span>Pay Online</span>
-                        <RadioButton
-                            v-model="paymentMethod"
-                            inputId="Online"
-                            name="paymentMethod"
-                            value="Online"
-                        />
+                        <RadioButton v-model="paymentMethod" inputId="Online" name="paymentMethod" value="Online" />
                     </div>
                     <p class="text-granite-gray leading-none text-xs mt-2">Pay with Paystack Checkout</p>
                 </label>
             </div>
 
-            <Button class="text-white bg-black w-full border-0 py-3 mt-4" @click="handleCheckout" >
+            <Button class="text-white bg-black w-full border-0 py-3 mt-4" @click="handleCheckout">
                 <div role="status" v-if="isPending">
                     <Spinner />
                 </div>
@@ -74,7 +62,7 @@
     </div>
 </template>
 <script setup>
-import { computed, onMounted, ref } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import { Minus, Plus } from "lucide-vue-next";
 import { useOrderStore } from "../stores/order";
 import { useStoreInfo } from "../stores/storeInfo";
@@ -87,24 +75,29 @@ import ShippingSummary from "../components/order-summary/ShippingSummary.vue";
 import SummaryTotal from "../components/order-summary/SummaryTotal.vue";
 import { useRoute } from "vue-router";
 import Drawer from "primevue/drawer";
+import { useQueryClient } from "@tanstack/vue-query";
+import { useRouter } from "vue-router";
 
 const route = useRoute();
+const router = useRouter();
+const queryClient = useQueryClient();
 const currentSlug = route.params.slug;
 
-const { shippingDetails, OfflineFee } = useOrderStore();
+const { shippingDetails } = useOrderStore();
 const { cart, cartLength, cartTotal } = useCartStore();
 const { storeInfo } = useStoreInfo();
 const { createOrder } = useApiCalls();
 const { trimmedString } = useUtils();
-const { mutate: useCreateOrder, isPending, error } = createOrder();
-
 const visibleBottom = ref(false);
 const paymentMethod = ref("Offline");
+const { mutate: useCreateOrder, isPending, error } = createOrder();
+
+watch(paymentMethod, (newValue) => {
+    console.log("Payment method changed to:", newValue);
+});
 
 const totalAmount = computed(() => {
-    return Number(
-        shippingDetails.paymentMethod === "Offline" ? OfflineFee + cartTotal / 100 : cartTotal / 100,
-    ).toLocaleString();
+    return Number(cartTotal / 100).toLocaleString();
 });
 
 const totalProducts = computed(() => cart.reduce((sum, item) => sum + item.selected_quantity, 0));
@@ -162,6 +155,7 @@ const payloadItems = cart.map((item, i) => {
 });
 
 const handleCheckout = () => {
+    visibleBottom.value = false;
     const payload = {
         channel: 3,
         customer_info: {
@@ -181,13 +175,13 @@ const handleCheckout = () => {
         paid_amount: 0,
         payment_mode: 1,
         payment_status: 0,
-        products_total: cartTotal,
-        shipping_price: shippingDetails.paymentMethod === "Offline" ? OfflineFee * 100 : 0,
+        products_total: totalAmount.value,
+        shipping_price: 0,
         shipping_company: 0,
         shipping_mode: false,
         shipping_paid: false,
-        store: storeInfo.store,
-        total_amount: shippingDetails.paymentMethod === "Offline" ? OfflineFee * 100 + cartTotal : cartTotal,
+        store: storeInfo.event.store.id,
+        total_amount: totalAmount.value,
         unique_items: uniqueProductCount(),
         items: [...payloadItems],
         redirect_url: `${window.location.origin}/${currentSlug}/store/order-successful/${orderRef}`,
@@ -195,7 +189,22 @@ const handleCheckout = () => {
     };
 
     console.log(payload);
-    useCreateOrder(payload);
+    useCreateOrder(payload, {
+        onSuccess: async (res) => {
+            queryClient.refetchQueries({ queryKey: ["storeInfo"] });
+            console.log(paymentMethod.value, res.data);
+
+            if (paymentMethod.value === "Online") {
+                window.location.href = `https://checkout.paystack.com/${res.data.access_code}`;
+            } else {
+                console.log("Offline order created successfully", res.data);
+                router.push({
+                    name: "OrderSuccessful",
+                    params: { id: res.data.order_ref.slice(-6) },
+                });
+            }
+        },
+    });
 };
 </script>
 

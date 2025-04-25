@@ -12,7 +12,6 @@ declare module 'vue' {
     CartButton: typeof import('./src/components/product-details/CartButton.vue')['default']
     CartPageItem: typeof import('./src/components/CartPageItem.vue')['default']
     Dialog: typeof import('primevue/dialog')['default']
-    Drawer: typeof import('primevue/drawer')['default']
     Form: typeof import('@primevue/forms/form')['default']
     InputNumber: typeof import('primevue/inputnumber')['default']
     InputText: typeof import('primevue/inputtext')['default']
