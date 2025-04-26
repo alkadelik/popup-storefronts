@@ -184,8 +184,9 @@ const handleCheckout = () => {
         total_amount: totalAmount.value,
         unique_items: uniqueProductCount(),
         items: [...payloadItems],
-        redirect_url: `${window.location.origin}/${currentSlug}/store/order-successful/${orderRef}`,
+        redirect_url: `${window.location.origin}/${currentSlug}/store/order-successful/${orderRef.slice(-6)}`,
         event: storeInfo.event.id,
+        payment_provider: paymentMethod.value === "Online" ? "paystack" : "cash",
     };
 
     console.log(payload);

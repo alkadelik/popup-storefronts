@@ -4,7 +4,8 @@
 
         <div class="py-6 px-4 flex gap-4 items-center" v-if="storeInfo?.event?.store">
             <div class="h-16 w-16 rounded-md">
-                <img :src="storeInfo.event.store.logo" alt="store logo" class="h-full w-full object-cover rounded-md" />
+                <img :src="storeInfo.event.store.logo" alt="store logo" class="h-full w-full object-cover rounded-md" v-if="storeInfo.event.store.logo" />
+                <img src="https://www.adaptivewfs.com/wp-content/uploads/2020/07/logo-placeholder-image.png" alt="store logo" class="h-full w-full object-cover rounded-md" v-else />
             </div>
 
             <div class="h-16 flex flex-col justify-between py-1">
@@ -38,7 +39,7 @@
             <div class="w-[70%] relative">
                 <input
                     type="text"
-                    placeholder="Search for by name"
+                    placeholder="Search by name"
                     v-model="productStore.searchInput"
                     class="bg-anti-flash-white text-dark-green placeholder:text-manatee rounded-sm w-full ps-8 pe-1.5 py-2.5 focus:outline-manatee"
                 />

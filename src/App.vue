@@ -31,6 +31,16 @@ console.log(eventRef.value);
 // ✅ Call useQuery immediately with the computed slug
 const storeQuery = fetchStoreInfo(eventRef);
 
+watch(
+    () => storeQuery.isError.value,
+    (isError) => {
+        if (isError) {
+            sessionStorage.clear();
+            console.error("Fetch store info failed.");
+        }
+    }
+);
+
 const isLoading = computed(() => storeQuery.isLoading.value);
 const routeName = computed(() => route.name);
 </script>
