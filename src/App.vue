@@ -4,13 +4,7 @@
             <div v-if="isLoading">
                 <StoreHomeSkeleton />
             </div>
-            <router-view v-slot="{ Component }">
-                <transition name="fade">
-                    <keep-alive>
-                        <component :is="Component"></component>
-                    </keep-alive>
-                </transition>
-            </router-view>
+            <RouterView v-else />
         </div>
     </div>
 </template>
@@ -19,12 +13,13 @@
 import { ref, watch, onMounted, computed } from "vue";
 import { useStoreInfo } from "./stores/storeInfo.ts";
 import { useApiCalls } from "./composables/useApiCalls.ts";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import StoreHomeSkeleton from "./components/skeletons/StoreHomeSkeleton.vue";
 
 const { storeInfo, updateStoreInfo } = useStoreInfo();
 const { fetchStoreInfo } = useApiCalls();
 const route = useRoute();
+const router = useRouter();
 const eventRef = computed(() => route.params.slug);
 console.log(eventRef.value);
 
@@ -37,6 +32,7 @@ watch(
         if (isError) {
             sessionStorage.clear();
             console.error("Fetch store info failed.");
+            router.push({ name: "NotFound" });
         }
     }
 );

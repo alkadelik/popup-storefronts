@@ -97,7 +97,7 @@ watch(paymentMethod, (newValue) => {
 });
 
 const totalAmount = computed(() => {
-    return Number(cartTotal / 100).toLocaleString();
+    return Number(cartTotal).toLocaleString();
 });
 
 const totalProducts = computed(() => cart.reduce((sum, item) => sum + item.selected_quantity, 0));
@@ -175,13 +175,13 @@ const handleCheckout = () => {
         paid_amount: 0,
         payment_mode: 1,
         payment_status: 0,
-        products_total: totalAmount.value,
+        products_total: Number(totalAmount.value.replace(/,/g, '')),
         shipping_price: 0,
         shipping_company: 0,
         shipping_mode: false,
         shipping_paid: false,
         store: storeInfo.event.store.id,
-        total_amount: totalAmount.value,
+        total_amount: Number(totalAmount.value.replace(/,/g, '')),
         unique_items: uniqueProductCount(),
         items: [...payloadItems],
         redirect_url: `${window.location.origin}/${currentSlug}/store/order-successful/${orderRef.slice(-6)}`,

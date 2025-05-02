@@ -36,6 +36,11 @@ const routes = [
         component: () => import("./views/ShippingDetails.vue"),
         name: "ShippingDetails",
     },
+    {
+        path: "/not-found",
+        component: () => import("./views/404Page.vue"),
+        name: "NotFound",
+    },
 ];
 
 const router = createRouter({
