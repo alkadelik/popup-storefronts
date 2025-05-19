@@ -1,6 +1,5 @@
 <template>
     <div class="flex flex-col h-dvh w-full overflow-y-hidden">
-
         <div class="flex-1 overflow-y-auto px-4 py-2 mt-3">
             <CartPageItem v-for="item in cart" :key="item.id" :item="item" />
         </div>
@@ -21,7 +20,10 @@
                 <p v-html="formatPrice(totalAmount)"></p>
             </div>
             <div class="flex justify-between py-3">
-                <router-link :to="{ name: 'Store', params: { slug: currentSlug } }" class="w-[35%]">
+                <router-link
+                    :to="{ name: 'Store', params: { storeSlug: storeSlug, eventSlug: eventSlug } }"
+                    class="w-[35%]"
+                >
                     <button class="w-full bg-anti-flash-white text-black py-3 rounded-md">Back to Shop</button>
                 </router-link>
                 <button class="w-[63%] bg-black text-white py-3 rounded-md" @click="proceedToShipping">
@@ -44,17 +46,18 @@ const queryClient = useQueryClient();
 const { formatPrice } = useUtils();
 
 onMounted(() => {
-    queryClient.invalidateQueries({ queryKey: ["storeInfo"] })
+    queryClient.invalidateQueries({ queryKey: ["storeInfo"] });
 });
 
 const router = useRouter();
 const route = useRoute();
-const currentSlug = route.params.slug;
+const storeSlug = route.params.storeSlug;
+const eventSlug = route.params.eventSlug;
 const { cart, cartLength } = useCartStore();
 
 const proceedToShipping = () => {
     if (cart.length !== 0) {
-        router.push({ name: "ShippingDetails", params: { slug: currentSlug } });
+        router.push({ name: "ShippingDetails", params: { storeSlug: storeSlug, eventSlug: eventSlug } });
     }
 };
 

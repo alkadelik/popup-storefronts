@@ -6,7 +6,8 @@ import { useUtils } from "../composables/useUtils";
 import { useRoute } from "vue-router";
 
 const route = useRoute();
-const currentSlug = route.params.slug;
+const storeSlug = route.params.storeSlug;
+const eventSlug = route.params.eventSlug;
 const { isProductInCart } = useCartStore();
 const { formatPrice } = useUtils();
 const productStore = useProductStore();
@@ -21,7 +22,7 @@ defineProps({
 
 <template>
     <RouterLink
-        :to="{ name: 'ProductDetail', params: { slug: currentSlug }, hash: `#${product.id}` }"
+        :to="{ name: 'ProductDetail', params: { storeSlug: storeSlug, eventSlug: eventSlug }, hash: `#${product.id}` }"
         class="w-[32.5%] h-32 mb-0.5 rounded-sm bg-granite-gray relative"
     >
         <img

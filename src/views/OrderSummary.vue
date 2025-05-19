@@ -3,7 +3,7 @@
         <div class="h-16 px-4 flex justify-between items-center">
             <h6 class="font-normal">Order Summary</h6>
             <router-link
-                :to="{ name: 'Cart', params: { slug: currentSlug } }"
+                :to="{ name: 'Cart', params: { storeSlug: storeSlug, eventSlug: eventSlug } }"
                 class="underline text-spanish-viridian text-xs"
                 >Edit All</router-link
             >
@@ -81,7 +81,8 @@ import { useRouter } from "vue-router";
 const route = useRoute();
 const router = useRouter();
 const queryClient = useQueryClient();
-const currentSlug = route.params.slug;
+const storeSlug = route.params.storeSlug;
+const eventSlug = route.params.eventSlug;
 
 const { shippingDetails } = useOrderStore();
 const { cart, cartLength, cartTotal } = useCartStore();
@@ -184,7 +185,7 @@ const handleCheckout = () => {
         total_amount: Number(totalAmount.value.replace(/,/g, '')),
         unique_items: uniqueProductCount(),
         items: [...payloadItems],
-        redirect_url: `${window.location.origin}/${currentSlug}/store/order-successful/${orderRef.slice(-6)}`,
+        redirect_url: `${window.location.origin}/${storeSlug}/events/${eventSlug}/store/order-successful/${orderRef.slice(-6)}`,
         event: storeInfo.event.id,
         payment_provider: paymentMethod.value === "Online" ? "paystack" : "cash",
     };

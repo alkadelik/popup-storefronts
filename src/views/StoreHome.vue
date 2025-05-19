@@ -104,7 +104,7 @@
 
             <!-- cart  -->
             <div class="w-10 h-10">
-                <router-link :to="{ name: 'Cart', params: { slug: currentSlug } }">
+                <router-link :to="{ name: 'Cart', params: { storeSlug: storeSlug, eventSlug: eventSlug } }">
                     <button
                         class="bg-anti-flash-white rounded-sm w-full h-full flex items-center justify-center cursor-pointer relative"
                     >
@@ -157,7 +157,8 @@ import ToastSuccess from "../components/utils/ToastSuccess.vue";
 import { useToast } from "primevue/usetoast";
 
 const route = useRoute();
-const currentSlug = route.params.slug;
+const storeSlug = route.params.storeSlug;
+const eventSlug = route.params.eventSlug;
 const sortIsOpen = ref(false);
 const { storeInfo } = useStoreInfo();
 const productStore = useProductStore();

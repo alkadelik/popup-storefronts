@@ -15,27 +15,39 @@ import { useStoreInfo } from "./stores/storeInfo.ts";
 import { useApiCalls } from "./composables/useApiCalls.ts";
 import { useRoute, useRouter } from "vue-router";
 import StoreHomeSkeleton from "./components/skeletons/StoreHomeSkeleton.vue";
+import { useQuery } from "@tanstack/vue-query";
 
 const { storeInfo, updateStoreInfo } = useStoreInfo();
-const { fetchStoreInfo } = useApiCalls();
+const { fetchStoreInfoQueryFn } = useApiCalls();
 const route = useRoute();
 const router = useRouter();
-const eventRef = computed(() => route.params.slug);
-console.log(eventRef.value);
+sessionStorage.clear();
 
-// ✅ Call useQuery immediately with the computed slug
-const storeQuery = fetchStoreInfo(eventRef);
+const storeQuery = useQuery({
+    queryKey: ["storeInfo", route.params],
+    queryFn: () => fetchStoreInfoQueryFn(route.params),
+    enabled: computed(() => !!route.params.storeSlug && !!route.params.eventSlug),
+    refetchOnWindowFocus: false,
+});
 
 watch(
     () => storeQuery.isError.value,
     (isError) => {
         if (isError) {
-            sessionStorage.clear();
             console.error("Fetch store info failed.");
             router.push({ name: "NotFound" });
         }
-    }
+    },
 );
+
+// watch(
+//     () => route.params,
+//     (params) => {
+//         if (params.storeSlug !== undefined || params.eventSlug !== undefined) {
+//             storeQuery.refetch(params);
+//         }
+//     },
+// );
 
 const isLoading = computed(() => storeQuery.isLoading.value);
 const routeName = computed(() => route.name);

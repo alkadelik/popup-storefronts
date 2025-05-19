@@ -4,35 +4,35 @@ import { createWebHistory, createRouter } from "vue-router";
 const routes = [
     {
         path: "/",
-        redirect: "/33ba20b350",
+        redirect: "/not-found",
     },
     {
-        path: "/:slug",
+        path: "/:storeSlug/events/:eventSlug",
         component: () => import("./views/StoreHome.vue"),
         name: "Store",
     },
     {
-        path: "/:slug/product",
+        path: "/:storeSlug/events/:eventSlug/product",
         component: () => import("./views/ProductDetails.vue"),
         name: "ProductDetail",
     },
     {
-        path: "/:slug/cart",
+        path: "/:storeSlug/events/:eventSlug/cart",
         component: () => import("./views/CartPage.vue"),
         name: "Cart",
     },
     {
-        path: "/:slug/store/order-successful/:id",
+        path: "/:storeSlug/events/:eventSlug/store/order-successful/:id",
         component: () => import("./views/OrderSuccessful.vue"),
         name: "OrderSuccessful",
     },
     {
-        path: "/:slug/order/summary",
+        path: "/:storeSlug/events/:eventSlug/order/summary",
         component: () => import("./views/OrderSummary.vue"),
         name: "OrderSummary",
     },
     {
-        path: "/:slug/order/shipping",
+        path: "/:storeSlug/events/:eventSlug/order/shipping",
         component: () => import("./views/ShippingDetails.vue"),
         name: "ShippingDetails",
     },
