@@ -2,15 +2,15 @@
     <div class="flex gap-2 mb-5">
         <Toast class="w-8/9 flex items-center" :visible="error" />
 
-        <img
-            :src="
-                item.images.length
-                    ? item.images[0].image
-                    : 'https://cdn.shopify.com/s/files/1/0533/2089/files/placeholder-images-image_large.png?v=1530129081'
-            "
-            alt="product image"
-            class="w-24 h-24 min-h-full object-cover rounded-sm"
-        />
+        <div class="w-24 h-24 min-h-full">
+            <img
+                :src="item.images[0].image"
+                alt="product image"
+                class="w-full h-full object-cover rounded-sm bg-granite-gray"
+                v-if="item.images.length"
+            />
+            <ProductImagePlaceholder v-else />
+        </div>
 
         <div class="flex flex-col gap-2 flex-1 justify-between">
             <div class="flex gap-1.5">
@@ -185,6 +185,7 @@ import { Minus, Plus } from "lucide-vue-next";
 import { useCartStore } from "../stores/cart";
 import { useToast } from "primevue/usetoast";
 import { useUtils } from "../composables/useUtils";
+import ProductImagePlaceholder from "./common/ProductImagePlaceholder.vue";
 
 const props = defineProps({
     item: Object,

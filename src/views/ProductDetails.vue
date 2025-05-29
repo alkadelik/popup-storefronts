@@ -77,6 +77,10 @@ const variantNames = (product: Product) => {
 };
 
 const optionsArray = (option: string) => {
+    if (!option) {
+        console.warn("optionsArray called with undefined");
+        return;
+    }
     const options = option.split(",").filter(Boolean);
     return options;
 };

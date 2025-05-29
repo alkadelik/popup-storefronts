@@ -1,6 +1,14 @@
 <template>
     <div class="flex gap-2 mb-2">
-        <img :src="imageUrl" alt="product image" class="w-16 h-16 object-cover rounded-sm" />
+        <div class="w-16 h-16 min-h-full">
+            <img
+                :src="props.item.images[0].image"
+                alt="product image"
+                class="w-full h-full object-cover rounded-sm bg-granite-gray"
+                v-if="props.item.images.length"
+            />
+            <ProductImagePlaceholder v-else />
+        </div>
 
         <div class="flex flex-col gap-2 flex-1">
             <div class="flex gap-1.5">
@@ -37,12 +45,6 @@ const props = defineProps({
         required: true,
     },
 });
-
-const imageUrl = computed(() =>
-    props.item.images?.length
-        ? props.item.images[0].image
-        : "https://cdn.shopify.com/s/files/1/0533/2089/files/placeholder-images-image_large.png?v=1530129081",
-);
 
 const trimmedName = computed(() =>
     props.item.product_name && props.item.product_name.length > 35 ? props.item.product_name.slice(0, 35) : "",

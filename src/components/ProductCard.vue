@@ -4,6 +4,7 @@ import { useProductStore } from "../stores/product";
 import { useCartStore } from "../stores/cart";
 import { useUtils } from "../composables/useUtils";
 import { useRoute } from "vue-router";
+import ProductImagePlaceholder from "./common/ProductImagePlaceholder.vue";
 
 const route = useRoute();
 const storeSlug = route.params.storeSlug;
@@ -23,20 +24,15 @@ defineProps({
 <template>
     <RouterLink
         :to="{ name: 'ProductDetail', params: { storeSlug: storeSlug, eventSlug: eventSlug }, hash: `#${product.id}` }"
-        class="w-[32.5%] h-32 mb-0.5 rounded-sm bg-granite-gray relative"
+        class="w-[32.5%] h-32 mb-0.5 rounded-sm relative"
     >
         <img
             :src="product.images[0].image"
             alt="product image"
-            class="w-full h-full object-cover rounded-sm"
+            class="w-full h-full object-cover rounded-sm bg-granite-gray"
             v-if="product.images.length"
         />
-        <img
-            src="https://cdn.shopify.com/s/files/1/0533/2089/files/placeholder-images-image_large.png?v=1530129081"
-            alt="product image"
-            class="w-full h-full object-cover rounded-sm bg-granite-gray"
-            v-else
-        />
+        <ProductImagePlaceholder v-else />
 
         <!-- out of stock  -->
         <div
