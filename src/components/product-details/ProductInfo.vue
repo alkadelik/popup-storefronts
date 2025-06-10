@@ -13,6 +13,17 @@ const props = defineProps({
         type: Function,
         required: true,
     },
+    hasVariants: {
+        type: Boolean,
+        default: false,
+    },
+    stockLeft: {
+        type: Number,
+    },
+    showStock: {
+        type: Boolean,
+        default: false,
+    },
 });
 
 const emit = defineEmits(["share-clicked"]);
@@ -69,6 +80,27 @@ const handleShareClick = () => {
             </div>
         </div>
 
-        <h5 v-html="formatPrice(props.price(props.filteredProduct))"></h5>
+        <div class="flex gap-2 items-center justify-between">
+            <h5>
+                <span v-if="hasVariants" class="text-sm me-1">from </span>
+                <span v-html="formatPrice(props.price(props.filteredProduct))"></span>
+            </h5>
+
+            <!-- out of stock  -->
+            <div
+                class="px-1.5 py-0.5 text-white bg-orioles-orange rounded-sm w-auto flex justify-center items-center"
+                v-if="stockLeft === 0 && showStock"
+            >
+                <small>Out of stock</small>
+            </div>
+
+            <!-- low in stock  -->
+            <div
+                class="px-1.5 py-0.5 text-white bg-vivid-gamboge rounded-sm w-auto flex justify-center items-center"
+                v-else-if="stockLeft <= 5 && showStock"
+            >
+                <small>Low in stock</small>
+            </div>
+        </div>
     </div>
 </template>

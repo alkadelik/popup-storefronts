@@ -6,6 +6,7 @@
         <Form
             v-slot="$form"
             :initialValues
+            :resolver="resolver"
             :validateOnValueUpdate="false"
             :validateOnBlur="true"
             @submit="onFormSubmit"
@@ -14,7 +15,7 @@
             <div class="flex flex-col gap-5 flex-1 w-full">
                 <div class="flex gap-2">
                     <div class="flex flex-col gap-1">
-                        <label for="firstName" class="mb-1">First Name</label>
+                        <label for="firstName" class="mb-1">First Name <span class="text-red-500">*</span></label>
                         <InputText
                             v-model="initialValues.firstName"
                             name="firstName"
@@ -23,6 +24,9 @@
                             fluid
                             class="px-4 py-3"
                         />
+                        <Message v-if="$form.firstName?.invalid" severity="error" size="small" variant="simple">{{
+                            $form.firstName.error.message
+                        }}</Message>
                     </div>
 
                     <div class="flex flex-col gap-1">
@@ -38,7 +42,7 @@
                     </div>
                 </div>
                 <div class="flex flex-col gap-1">
-                    <label for="email" class="mb-1">Email</label>
+                    <label for="email" class="mb-1">Email <span class="text-red-500">*</span></label>
                     <InputText
                         v-model="initialValues.email"
                         name="email"
@@ -47,9 +51,12 @@
                         fluid
                         class="px-4 py-3"
                     />
+                    <Message v-if="$form.firstName?.invalid" severity="error" size="small" variant="simple">{{
+                        $form.email.error.message
+                    }}</Message>
                 </div>
                 <div class="flex flex-col gap-1">
-                    <label for="phoneNumber" class="mb-1">Phone Number</label>
+                    <label for="phoneNumber" class="mb-1">Phone Number <span class="text-red-500">*</span></label>
                     <InputNumber
                         v-model="initialValues.phoneNumber"
                         name="phoneNumber"
@@ -58,6 +65,9 @@
                         placeholder="+2348076963928"
                         fluid
                     />
+                    <Message v-if="$form.phoneNumber?.invalid" severity="error" size="small" variant="simple">{{
+                        $form.firstName.error.message
+                    }}</Message>
                 </div>
                 <div class="flex flex-col gap-1">
                     <label for="instagram_handle" class="mb-1">Instagram Handle</label>
@@ -73,13 +83,8 @@
             </div>
 
             <div class="flex gap-2 mb-4">
-                <Button label="skip" class="w-24 bg-anti-flash-white text-black border-0" @click="goToNextPage()" />
-                <Button
-                    type="submit"
-                    severity="secondary"
-                    label="Proceed to Checkout"
-                    class="py-3 flex-1 bg-black text-white"
-                />
+                <Button label="Skip" class="w-24 bg-anti-flash-white text-black border-0" @click="goToNextPage()" />
+                <Button type="submit" severity="secondary" label="Next" class="py-3 flex-1 bg-black text-white" />
             </div>
         </Form>
     </div>
@@ -96,14 +101,37 @@ const { shippingDetails: initialValues, resetShippingDetails } = useOrderStore()
 const { storeInfo } = useStoreInfo();
 const { formatNaira } = useUtils();
 
-const onFormSubmit = () => {
-    router.push({ name: "OrderSummary" });
+const resolver = ({ values }) => {
+    const errors = {};
+
+    if (!values.firstName) {
+        errors.firstName = [{ message: "First name is required." }];
+    }
+
+    if (!values.email) {
+        errors.email = [{ message: "Email is required." }];
+    }
+
+    if (!values.phoneNumber) {
+        errors.phoneNumber = [{ message: "Phone number is required." }];
+    }
+
+    return {
+        errors,
+        values,
+    };
+};
+
+const onFormSubmit = ({ valid }) => {
+    if (valid) {
+        router.push({ name: "OrderSummary" });
+    }
 };
 
 const goToNextPage = () => {
     sessionStorage.removeItem("orderStore");
     resetShippingDetails();
-    Object.keys(initialValues).forEach(key => {
+    Object.keys(initialValues).forEach((key) => {
         initialValues[key] = "";
     });
     router.push({ name: "OrderSummary" });

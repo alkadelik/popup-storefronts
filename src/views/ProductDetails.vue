@@ -16,7 +16,14 @@
                 <!-- product image  -->
                 <ProductImage :filteredProduct="filteredProduct" />
 
-                <ProductInfo :filteredProduct="filteredProduct" :price="price" @share-clicked="shareUrl" />
+                <ProductInfo
+                    :filteredProduct="filteredProduct"
+                    :price="price"
+                    @share-clicked="shareUrl"
+                    :has-variants="variantNames(filteredProduct).length > 0"
+                    :stock-left="stock(filteredProduct)"
+                    :showStock="isVariantSelectionComplete(filteredProduct)"
+                />
 
                 <ProductVariantsForm
                     :filteredProduct="filteredProduct"
@@ -30,6 +37,7 @@
                     :stock="stock"
                     :sku="sku"
                     :onFormSubmit="onFormSubmit"
+                    :disabled="isVariantSelectionComplete(filteredProduct) && stock(filteredProduct) === 0"
                 />
             </div>
         </section>
@@ -201,6 +209,16 @@ const shareUrl = (productId: number) => {
     } else {
         console.error("Web Share API not supported in this browser");
     }
+};
+
+const isVariantSelectionComplete = (product: Product) => {
+    const variants = variantNames(product);
+    const form = formState[product.id] || {};
+    if (variants.length === 0) return true;
+    if (variants.length === 1) return !!form.variant1;
+    if (variants.length === 2) return !!form.variant1 && !!form.variant2;
+    if (variants.length === 3) return !!form.variant1 && !!form.variant2 && !!form.variant3;
+    return false;
 };
 
 const onFormSubmit = (

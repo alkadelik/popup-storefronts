@@ -56,7 +56,7 @@
                 <div role="status" v-if="isPending">
                     <Spinner />
                 </div>
-                <span v-else>continue</span>
+                <span v-else>Continue</span>
             </Button>
         </Drawer>
     </div>
