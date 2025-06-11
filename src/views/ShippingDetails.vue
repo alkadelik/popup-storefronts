@@ -51,7 +51,7 @@
                         fluid
                         class="px-4 py-3"
                     />
-                    <Message v-if="$form.firstName?.invalid" severity="error" size="small" variant="simple">{{
+                    <Message v-if="$form.email?.invalid" severity="error" size="small" variant="simple">{{
                         $form.email.error.message
                     }}</Message>
                 </div>
@@ -66,7 +66,7 @@
                         fluid
                     />
                     <Message v-if="$form.phoneNumber?.invalid" severity="error" size="small" variant="simple">{{
-                        $form.firstName.error.message
+                        $form.phoneNumber.error.message
                     }}</Message>
                 </div>
                 <div class="flex flex-col gap-1">
