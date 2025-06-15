@@ -99,7 +99,7 @@ const handleShareClick = () => {
                 class="px-1.5 py-0.5 text-white bg-vivid-gamboge rounded-sm w-auto flex justify-center items-center"
                 v-else-if="stockLeft <= 5 && showStock"
             >
-                <small>Low in stock</small>
+                <small>{{ stockLeft }} in stock</small>
             </div>
         </div>
     </div>

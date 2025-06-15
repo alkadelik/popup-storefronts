@@ -155,19 +155,35 @@ const payloadItems = cart.map((item, i) => {
     return payloadItem;
 });
 
+const customerInfo = computed(() => {
+    const { firstName, phoneNumber, email, address, lastName, location } = shippingDetails;
+    if (!firstName && !phoneNumber && !email) {
+        return {
+            address: null,
+            email: null,
+            first_name: null,
+            last_name: null,
+            line1: null,
+            phone: null,
+            city: null,
+        };
+    }
+    return {
+        address,
+        email,
+        first_name: firstName,
+        last_name: lastName,
+        line1: address,
+        phone: phoneNumber,
+        city: location,
+    };
+});
+
 const handleCheckout = () => {
     visibleBottom.value = false;
     const payload = {
         channel: 3,
-        customer_info: {
-            address: shippingDetails.address,
-            email: shippingDetails.email,
-            first_name: shippingDetails.firstName,
-            last_name: shippingDetails.lastName,
-            line1: shippingDetails.address,
-            phone: shippingDetails.phoneNumber,
-            city: shippingDetails.location,
-        },
+        customer_info: customerInfo.value,
         fulfilled: 0,
         has_customer: false,
         items_count: cartLength,

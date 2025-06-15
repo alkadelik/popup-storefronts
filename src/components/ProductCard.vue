@@ -47,7 +47,7 @@ defineProps({
             class="px-1.5 py-0.5 text-white bg-vivid-gamboge rounded-sm z-5 absolute top-1 right-1 w-auto flex justify-center items-center"
             v-else-if="product.total_stock <= 5"
         >
-            <small>Low in stock</small>
+            <small>{{ product.total_stock }} in stock</small>
         </div>
 
         <!-- if product is in cart  -->
