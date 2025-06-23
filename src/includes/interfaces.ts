@@ -62,6 +62,11 @@ export interface Product {
     images: { id: number; type: string; image: string; name: string | null; store: string; product: number }[];
     sku: Sku[];
     events: any[];
+    display_event_data: {
+        [eventId: string]: {
+            display_product: boolean;
+        };
+    };
 }
 
 export interface Sku {

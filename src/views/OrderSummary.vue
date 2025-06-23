@@ -158,15 +158,7 @@ const payloadItems = cart.map((item, i) => {
 const customerInfo = computed(() => {
     const { firstName, phoneNumber, email, address, lastName, location } = shippingDetails;
     if (!firstName && !phoneNumber && !email) {
-        return {
-            address: null,
-            email: null,
-            first_name: null,
-            last_name: null,
-            line1: null,
-            phone: null,
-            city: null,
-        };
+        return null;
     }
     return {
         address,
@@ -185,7 +177,7 @@ const handleCheckout = () => {
         channel: 3,
         customer_info: customerInfo.value,
         fulfilled: 0,
-        has_customer: false,
+        has_customer: false,    
         items_count: cartLength,
         order_ref: orderRef,
         order_date: orderDate,

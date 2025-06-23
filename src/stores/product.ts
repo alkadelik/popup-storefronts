@@ -71,6 +71,9 @@ export const useProductStore = defineStore("product", () => {
             );
         }
 
+        products = products.filter(
+            (product) => product.display_event_data[`${storeInfo?.event.id}`].display_product === true,
+        );
         return products; // No sorting here, inventory is already sorted
     });
 
