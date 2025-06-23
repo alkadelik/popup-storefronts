@@ -109,7 +109,7 @@ const uniqueProductCount = () => {
 };
 
 const generateOrderRef = (storeId, cartItems) => {
-    const refType = "1";
+    const refType = "3";
     const randInt = Math.floor(Math.random() * 9000) + 1000; // ensures it's 4-digit
     const today = new Date();
     const year = today.getFullYear().toString().slice(-2);
