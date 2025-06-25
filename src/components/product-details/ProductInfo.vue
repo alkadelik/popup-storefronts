@@ -82,7 +82,7 @@ const handleShareClick = () => {
 
         <div class="flex gap-2 items-center justify-between">
             <h5>
-                <span v-if="hasVariants" class="text-sm me-1">from </span>
+                <span v-if="hasVariants && !showStock" class="text-sm me-1">from </span>
                 <span v-html="formatPrice(props.price(props.filteredProduct))"></span>
             </h5>
 
