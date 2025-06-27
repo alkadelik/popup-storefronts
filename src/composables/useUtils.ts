@@ -20,6 +20,26 @@ export function useUtils() {
         return `<small class="me-0.5">${currencySymbol}</small><span>${naira}</span><small>.${kobo || "00"}</small>`;
     };
 
+    const formatPricetoK = (priceInKobo: number) => {
+        const nairaAmount = priceInKobo;
+        let displayAmount: string;
+        let suffix = "";
+        if (nairaAmount >= 1_000_000) {
+            displayAmount = (nairaAmount / 1_000_000).toFixed(1).replace(/\.0$/, "");
+            suffix = "M";
+        } else if (nairaAmount >= 1_000) {
+            displayAmount = (nairaAmount / 1_000).toFixed(1).replace(/\.0$/, "");
+            suffix = "K";
+        } else {
+            displayAmount = nairaAmount.toLocaleString("en-NG");
+        }
+        const currencySymbol =
+            new Intl.NumberFormat("en-NG", { style: "currency", currency })
+                .formatToParts()
+                .find((part) => part.type === "currency")?.value || "";
+        return `<small class="me-0.5">${currencySymbol}</small><span>${displayAmount}${suffix}</span>`;
+    };
+
     const formatKobo = (priceInKobo: number) => {
         const nairaAmount = priceInKobo / 100;
         const formattedAmount = nairaAmount.toLocaleString("en-NG", { style: "currency", currency });
@@ -62,5 +82,5 @@ export function useUtils() {
         document.title = title;
     }
 
-    return { convertToNaira, formatPrice, formatKobo, trimmedString, formatNaira, setFavicon, setTitle };
+    return { convertToNaira, formatPrice, formatPricetoK, formatKobo, trimmedString, formatNaira, setFavicon, setTitle };
 }

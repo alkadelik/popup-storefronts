@@ -10,7 +10,7 @@ const route = useRoute();
 const storeSlug = route.params.storeSlug;
 const eventSlug = route.params.eventSlug;
 const { isProductInCart } = useCartStore();
-const { formatPrice } = useUtils();
+const { formatPricetoK } = useUtils();
 const productStore = useProductStore();
 
 defineProps({
@@ -80,7 +80,10 @@ defineProps({
 
         <!-- Price -->
         <div class="w-full relative bottom-8 z-5 h-6 p-1">
-            <p class="bg-white w-full text-center rounded-sm" v-html="formatPrice(product.price)"></p>
+            <p class="bg-white w-full text-center rounded-sm">
+                <small v-if="product.variants && product.variants.length">from </small>
+                <span v-html="formatPricetoK(product.price)"></span>
+            </p>
         </div>
     </RouterLink>
 </template>

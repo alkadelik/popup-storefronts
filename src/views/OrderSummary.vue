@@ -156,10 +156,10 @@ const payloadItems = cart.map((item, i) => {
 });
 
 const customerInfo = computed(() => {
-    const { firstName, phoneNumber, email, address, lastName, location } = shippingDetails;
-    if (!firstName && !phoneNumber && !email) {
-        return null;
-    }
+    // const { firstName, phoneNumber, email, address, lastName, location } = shippingDetails;
+    // if (!firstName && !phoneNumber && !email) {
+    //     return null;
+    // }
     return {
         address,
         email,
@@ -175,28 +175,35 @@ const handleCheckout = () => {
     visibleBottom.value = false;
     const payload = {
         channel: 3,
-        customer_info: customerInfo.value,
         fulfilled: 0,
-        has_customer: false,    
+        // customerInfo: customerInfo.value,
         items_count: cartLength,
         order_ref: orderRef,
         order_date: orderDate,
         paid_amount: 0,
         payment_mode: 1,
         payment_status: 0,
-        products_total: Number(totalAmount.value.replace(/,/g, '')),
+        products_total: Number(totalAmount.value.replace(/,/g, "")),
         shipping_price: 0,
         shipping_company: 0,
         shipping_mode: false,
         shipping_paid: false,
         store: storeInfo.event.store.id,
-        total_amount: Number(totalAmount.value.replace(/,/g, '')),
+        total_amount: Number(totalAmount.value.replace(/,/g, "")),
         unique_items: uniqueProductCount(),
         items: [...payloadItems],
-        redirect_url: `${window.location.origin}/${storeSlug}/events/${eventSlug}/store/order-successful/${orderRef.slice(-6)}`,
+        redirect_url: `${
+            window.location.origin
+        }/${storeSlug}/events/${eventSlug}/store/order-successful/${orderRef.slice(-6)}`,
         event: storeInfo.event.id,
         payment_provider: paymentMethod.value === "Online" ? "paystack" : "cash",
     };
+
+    // Only add customer_info if all required fields are not empty strings
+    const { firstName, phoneNumber, email } = shippingDetails;
+    if (firstName !== "" && phoneNumber !== "" && email !== "") {
+        payload.customer_info = customerInfo.value;
+    }
 
     console.log(payload);
     useCreateOrder(payload, {
