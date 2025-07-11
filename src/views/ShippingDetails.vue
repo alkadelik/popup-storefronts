@@ -57,13 +57,14 @@
                 </div>
                 <div class="flex flex-col gap-1">
                     <label for="phoneNumber" class="mb-1">Phone Number <span class="text-red-500">*</span></label>
-                    <InputNumber
+                    <input
                         v-model="initialValues.phoneNumber"
-                        name="phoneNumber"
-                        prefix="+"
-                        :useGrouping="false"
-                        placeholder="+2348076963928"
-                        fluid
+                        type="text"
+                        inputmode="numeric"
+                        pattern="[0-9]*"
+                        placeholder="Enter phone number"
+                        @input="(e) => (initialValues.phoneNumber = e.target.value.replace(/\D/g, ''))"
+                        class="p-3"
                     />
                     <Message v-if="$form.phoneNumber?.invalid" severity="error" size="small" variant="simple">{{
                         $form.phoneNumber.error.message

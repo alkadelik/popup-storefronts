@@ -21,7 +21,6 @@ const { storeInfo, updateStoreInfo } = useStoreInfo();
 const { fetchStoreInfoQueryFn } = useApiCalls();
 const route = useRoute();
 const router = useRouter();
-sessionStorage.clear();
 
 const storeQuery = useQuery({
     queryKey: ["storeInfo", route.params],
@@ -35,6 +34,7 @@ watch(
     (isError) => {
         if (isError) {
             console.error("Fetch store info failed.");
+            sessionStorage.clear();
             router.push({ name: "NotFound" });
         }
     },

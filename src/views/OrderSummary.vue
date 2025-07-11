@@ -35,6 +35,7 @@
             class="!rounded-md !mx-2 !my-2"
         >
             <div class="flex gap-3">
+                <!-- Pay Offline -->
                 <label for="Offline" class="w-full cursor-pointer p-3 rounded-md bg-anti-flash-white block">
                     <div class="flex justify-between items-center">
                         <span>Pay Offline</span>
@@ -43,16 +44,31 @@
                     <p class="text-granite-gray leading-none text-xs mt-2">Cash, POS, or Transfer</p>
                 </label>
 
-                <label for="Online" class="w-full cursor-pointer p-3 rounded-md bg-anti-flash-white block">
+                <!-- Pay Online -->
+                <label
+                    for="Online"
+                    :class="[
+                        'w-full p-3 rounded-md bg-anti-flash-white block',
+                        canPayOnline ? 'cursor-pointer' : 'cursor-not-allowed opacity-50',
+                    ]"
+                >
                     <div class="flex justify-between items-center">
                         <span>Pay Online</span>
-                        <RadioButton v-model="paymentMethod" inputId="Online" name="paymentMethod" value="Online" />
+                        <RadioButton
+                            v-model="paymentMethod"
+                            inputId="Online"
+                            name="paymentMethod"
+                            value="Online"
+                            :disabled="!canPayOnline"
+                        />
                     </div>
-                    <p class="text-granite-gray leading-none text-xs mt-2">Pay with Paystack Checkout</p>
+                    <p class="text-granite-gray leading-none text-xs mt-2">
+                        {{ canPayOnline ? "Pay with Paystack Checkout" : "Add personal information to pay online" }}
+                    </p>
                 </label>
             </div>
 
-            <Button class="text-white bg-black w-full border-0 py-3 mt-4" @click="handleCheckout">
+            <Button class="text-white bg-black w-full border-0 py-3 mt-4" @click="handleCheckout" :disabled="isPending">
                 <div role="status" v-if="isPending">
                     <Spinner />
                 </div>
@@ -102,6 +118,10 @@ const totalAmount = computed(() => {
 });
 
 const totalProducts = computed(() => cart.reduce((sum, item) => sum + item.selected_quantity, 0));
+
+const canPayOnline = computed(
+    () => shippingDetails.firstName !== "" && shippingDetails.phoneNumber !== "" && shippingDetails.email !== "",
+);
 
 const uniqueProductCount = () => {
     const uniqueIds = new Set(cart.map((item) => item.id));
