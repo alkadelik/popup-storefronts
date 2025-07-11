@@ -156,18 +156,16 @@ const payloadItems = cart.map((item, i) => {
 });
 
 const customerInfo = computed(() => {
-    // const { firstName, phoneNumber, email, address, lastName, location } = shippingDetails;
+    const { firstName, phoneNumber, email, lastName, instagram_handle } = shippingDetails;
     // if (!firstName && !phoneNumber && !email) {
     //     return null;
     // }
     return {
-        address,
         email,
         first_name: firstName,
         last_name: lastName,
-        line1: address,
         phone: phoneNumber,
-        city: location,
+        instagram_handle: instagram_handle,
     };
 });
 
