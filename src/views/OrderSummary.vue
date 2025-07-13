@@ -93,9 +93,11 @@ import { useRoute } from "vue-router";
 import Drawer from "primevue/drawer";
 import { useQueryClient } from "@tanstack/vue-query";
 import { useRouter } from "vue-router";
+import { useToast } from "primevue/usetoast";
 
 const route = useRoute();
 const router = useRouter();
+const toast = useToast();
 const queryClient = useQueryClient();
 const storeSlug = route.params.storeSlug;
 const eventSlug = route.params.eventSlug;
@@ -238,6 +240,17 @@ const handleCheckout = () => {
                     params: { id: res.data.order_ref.slice(-6) },
                 });
             }
+        },
+        onError: (error) => {
+            console.error("Create order failed:", error);
+
+            const message = error?.response?.data?.message || error?.message || "An error occurred";
+
+            toast.add({
+                severity: "error",
+                detail: message,
+                life: 1000,
+            });
         },
     });
 };

@@ -64,7 +64,7 @@
                         pattern="[0-9]*"
                         placeholder="Enter phone number"
                         @input="(e) => (initialValues.phoneNumber = e.target.value.replace(/\D/g, ''))"
-                        class="p-3"
+                        class="p-3 border-none outline-none focus:outline-none focus:ring-0 focus:border-transparent"
                     />
                     <Message v-if="$form.phoneNumber?.invalid" severity="error" size="small" variant="simple">{{
                         $form.phoneNumber.error.message
