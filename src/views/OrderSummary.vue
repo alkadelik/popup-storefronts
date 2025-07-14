@@ -115,9 +115,7 @@ watch(paymentMethod, (newValue) => {
     console.log("Payment method changed to:", newValue);
 });
 
-const totalAmount = computed(() => {
-    return Number(cartTotal).toLocaleString();
-});
+const totalAmount = computed(() => cart.reduce((sum, item) => sum + item.variant_price * item.selected_quantity, 0).toLocaleString());
 
 const totalProducts = computed(() => cart.reduce((sum, item) => sum + item.selected_quantity, 0));
 
@@ -147,7 +145,6 @@ const variantNames = (product) => {
     return names.length ? names : ["", "", ""];
 };
 
-const orderRef = generateOrderRef(storeInfo.event.store.id, cart);
 const orderDate = new Date().toISOString().split("T")[0];
 
 const payloadItems = cart.map((item, i) => {
@@ -193,6 +190,7 @@ const customerInfo = computed(() => {
 
 const handleCheckout = () => {
     visibleBottom.value = false;
+    const orderRef = generateOrderRef(storeInfo.event.store.id, cart);
     const payload = {
         channel: 3,
         fulfilled: 0,
