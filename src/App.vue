@@ -16,9 +16,11 @@ import { useApiCalls } from "./composables/useApiCalls.ts";
 import { useRoute, useRouter } from "vue-router";
 import StoreHomeSkeleton from "./components/skeletons/StoreHomeSkeleton.vue";
 import { useQuery } from "@tanstack/vue-query";
+import { useCartStore } from "./stores/cart.ts";
 
 const { storeInfo, updateStoreInfo } = useStoreInfo();
 const { fetchStoreInfoQueryFn } = useApiCalls();
+const cartStore = useCartStore();
 const route = useRoute();
 const router = useRouter();
 
@@ -28,6 +30,19 @@ const storeQuery = useQuery({
     enabled: computed(() => !!route.params.storeSlug && !!route.params.eventSlug),
     refetchOnWindowFocus: false,
 });
+
+const previousSlug = localStorage.getItem("currentSlug");
+watch(
+    () => route.params,
+    (slug) => {
+        console.log(slug);
+
+        if (previousSlug !== `${slug.storeSlug}-${slug.eventSlug}`) {
+            cartStore.clearCart();
+            localStorage.setItem("currentSlug", `${slug.storeSlug}-${slug.eventSlug}`);
+        }
+    },
+);
 
 watch(
     () => storeQuery.isError.value,
