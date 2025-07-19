@@ -31,19 +31,6 @@ const storeQuery = useQuery({
     refetchOnWindowFocus: false,
 });
 
-const previousSlug = localStorage.getItem("currentSlug");
-watch(
-    () => route.params,
-    (slug) => {
-        console.log(slug);
-
-        if (previousSlug !== `${slug.storeSlug}-${slug.eventSlug}`) {
-            cartStore.clearCart();
-            localStorage.setItem("currentSlug", `${slug.storeSlug}-${slug.eventSlug}`);
-        }
-    },
-);
-
 watch(
     () => storeQuery.isError.value,
     (isError) => {

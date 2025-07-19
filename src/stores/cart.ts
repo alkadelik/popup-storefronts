@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import { computed, ref, watch } from "vue";
 import type { CartItem, Selections, Product } from "../includes/interfaces";
+import { getCurrentStoreSlug } from "../includes/utils";
 
 export const useCartStore = defineStore(
     "cart",
@@ -178,7 +179,7 @@ export const useCartStore = defineStore(
     },
     {
         persist: {
-            key: "cartStore",
+            key: `cartStore-${getCurrentStoreSlug()}`,
             storage: sessionStorage,
         },
     },
