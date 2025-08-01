@@ -42,7 +42,11 @@
             </div>
         </section>
         <!--  -->
-        <CartButton :totalProducts="totalProducts" />
+        <div class="h-15 shadow-[0px_-4px_8px_0px_#00000014] p-4 flex items-center">
+            <div class="flex justify-end items-center w-full">
+                <CartButton :totalProducts="totalProducts" />
+            </div>
+        </div>
     </div>
 </template>
 

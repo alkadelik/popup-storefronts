@@ -34,7 +34,7 @@
     </div>
 </template>
 <script setup>
-import { computed, onMounted } from "vue";
+import { computed, onMounted, watch } from "vue";
 import { useCartStore } from "../stores/cart";
 import CartPageItem from "../components/CartPageItem.vue";
 import { useRouter } from "vue-router";
@@ -63,5 +63,14 @@ const proceedToShipping = () => {
 
 const totalAmount = computed(() => cart.reduce((sum, item) => sum + item.variant_price * item.selected_quantity, 0));
 const totalProducts = computed(() => cart.reduce((sum, item) => sum + item.selected_quantity, 0));
+
+watch(
+    () => totalProducts.value,
+    (newLength) => {
+        if (newLength === 0) {
+            router.push({ name: "Store", params: { slug: currentSlug } });
+        }
+    },
+);
 </script>
 <style></style>
