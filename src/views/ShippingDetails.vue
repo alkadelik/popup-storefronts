@@ -94,13 +94,17 @@
 import { ref } from "vue";
 import { useOrderStore } from "../stores/order";
 import { useStoreInfo } from "../stores/storeInfo";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 import { useUtils } from "../composables/useUtils";
 
 const router = useRouter();
+const route = useRoute();
 const { shippingDetails: initialValues, resetShippingDetails } = useOrderStore();
 const { storeInfo } = useStoreInfo();
 const { formatNaira } = useUtils();
+const storeSlug = route.params.storeSlug;
+const eventSlug = route.params.eventSlug;
+const eventId = route.params.eventId;
 
 const resolver = ({ values }) => {
     const errors = {};
@@ -125,7 +129,7 @@ const resolver = ({ values }) => {
 
 const onFormSubmit = ({ valid }) => {
     if (valid) {
-        router.push({ name: "OrderSummary" });
+        router.push({ name: "OrderSummary", params: { storeSlug, eventSlug, eventId } });
     }
 };
 
@@ -135,7 +139,7 @@ const goToNextPage = () => {
     Object.keys(initialValues).forEach((key) => {
         initialValues[key] = "";
     });
-    router.push({ name: "OrderSummary" });
+    router.push({ name: "OrderSummary", params: { storeSlug, eventSlug, eventId } });
 };
 </script>
 <style></style>

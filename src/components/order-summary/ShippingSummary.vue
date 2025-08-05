@@ -2,7 +2,7 @@
     <div class="py-4 my-4 border-platinum border-t flex flex-col gap-2.5">
         <div class="flex justify-between items-center mb-1">
             <h6>Customer Information</h6>
-            <router-link :to="{ name: 'ShippingDetails', params: { storeSlug: storeSlug, eventSlug: eventSlug } }" class="cursor-pointer">
+            <router-link :to="{ name: 'ShippingDetails', params: { storeSlug: storeSlug, eventSlug: eventSlug, eventId: eventId } }" class="cursor-pointer">
                 <svg
                     width="20"
                     height="20"
@@ -43,6 +43,7 @@ import { useRoute } from "vue-router";
 const route = useRoute();
 const storeSlug = route.params.storeSlug;
 const eventSlug = route.params.eventSlug;
+const eventId = route.params.eventId;
 
 defineProps({
     shippingDetails: {

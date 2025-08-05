@@ -2,7 +2,7 @@
     <div class="store-home pb-4">
         <ToastSuccess :visible="(visible = 'success')" @close="visible = false" :text="toastText" />
 
-        <div class="py-6 px-4 flex gap-4 items-center" v-if="storeInfo?.event?.store">
+        <div class="pt-6 px-4 flex gap-4 items-center" v-if="storeInfo?.event?.store">
             <div class="h-16 w-16 rounded-md">
                 <img :src="storeInfo.event.store.logo" alt="store logo" class="h-full w-full object-cover rounded-md" v-if="storeInfo.event.store.logo" />
                 <img src="https://www.adaptivewfs.com/wp-content/uploads/2020/07/logo-placeholder-image.png" alt="store logo" class="h-full w-full object-cover rounded-md" v-else />
@@ -34,6 +34,8 @@
                 </div>
             </div>
         </div>
+
+        <h5 class="my-4 px-4 text-xanadu">👋 Welcome to <span class="text-dark-green font-bold">{{ storeInfo.event.event_name }}</span></h5>
 
         <div class="pb-4 px-4 flex justify-between items-center">
             <div class="w-[70%] relative">

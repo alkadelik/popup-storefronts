@@ -8,10 +8,14 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    404Page: typeof import('./src/components/common/404Page.vue')['default']
+    404Screen: typeof import('./src/components/common/404Screen.vue')['default']
+    AlmostReady: typeof import('./src/components/common/AlmostReady.vue')['default']
     Button: typeof import('primevue/button')['default']
     CartButton: typeof import('./src/components/product-details/CartButton.vue')['default']
     CartPageItem: typeof import('./src/components/CartPageItem.vue')['default']
     Dialog: typeof import('primevue/dialog')['default']
+    EventClosed: typeof import('./src/components/common/EventClosed.vue')['default']
     Form: typeof import('@primevue/forms/form')['default']
     InputNumber: typeof import('primevue/inputnumber')['default']
     InputText: typeof import('primevue/inputtext')['default']

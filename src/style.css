@@ -30,8 +30,57 @@
     font-display: block;
 }
 
+@font-face {
+    font-family: "Sato";
+    src: url("/fonts/Sato/sato-light.otf") format("opentype");
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Sato";
+    src: url("/fonts/Sato/sato-regular.otf") format("opentype");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Sato";
+    src: url("/fonts/Sato/sato-medium.otf") format("opentype");
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Sato";
+    src: url("/fonts/Sato/sato-semi.otf") format("opentype");
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Sato";
+    src: url("/fonts/Sato/sato-bold.otf") format("opentype");
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Sato";
+    src: url("/fonts/Sato/sato-heavy.otf") format("opentype");
+    font-weight: 900;
+    font-style: normal;
+    font-display: swap;
+}
+
 @theme {
     --font-aeonik: "Aeonik";
+    --font-sato: "Sato";
 
     --color-white: #fff;
     --color-black: #000;
@@ -51,5 +100,6 @@
     --color-feldgrau: #445B54;
     --color-bright-gray: #E5F2EF;
     --color-vivid-gamboge: #FD9400;
-    --color-xanadu: #6D8C82
+    --color-xanadu: #6D8C82;
+    --color-dark-green: #002E22;
 }

@@ -17,7 +17,7 @@
             </div>
         </div>
         <div class="h-20 p-4 flex flex-col gap-2">
-            <router-link :to="{ name: 'Store', params: { storeSlug: storeSlug, eventSlug: eventSlug } }">
+            <router-link :to="{ name: 'Store', params: { storeSlug: storeSlug, eventSlug: eventSlug, eventId: eventId } }">
                 <button class="w-full bg-black text-white py-3 rounded-md">Back to Shop</button>
             </router-link>
         </div>
@@ -41,6 +41,7 @@ onMounted(() => {
 const route = useRoute();
 const storeSlug = route.params.storeSlug;
 const eventSlug = route.params.eventSlug;
+const eventId = route.params.eventId;
 const orderId = route.params.id;
 const { shippingDetails } = useOrderStore();
 const toastText = ref("");

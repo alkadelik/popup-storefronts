@@ -21,7 +21,7 @@
             </div>
             <div class="flex justify-between py-3">
                 <router-link
-                    :to="{ name: 'Store', params: { storeSlug: storeSlug, eventSlug: eventSlug } }"
+                    :to="{ name: 'Store', params: { storeSlug: storeSlug, eventSlug: eventSlug, eventId: eventId } }"
                     class="w-[35%]"
                 >
                     <button class="w-full bg-anti-flash-white text-black py-3 rounded-md">Back to Shop</button>
@@ -53,11 +53,12 @@ const router = useRouter();
 const route = useRoute();
 const storeSlug = route.params.storeSlug;
 const eventSlug = route.params.eventSlug;
+const eventId = route.params.eventId;
 const { cart, cartLength } = useCartStore();
 
 const proceedToShipping = () => {
     if (cart.length !== 0) {
-        router.push({ name: "ShippingDetails", params: { storeSlug: storeSlug, eventSlug: eventSlug } });
+        router.push({ name: "ShippingDetails", params: { storeSlug: storeSlug, eventSlug: eventSlug, eventId: eventId } });
     }
 };
 
@@ -68,7 +69,7 @@ watch(
     () => totalProducts.value,
     (newLength) => {
         if (newLength === 0) {
-            router.push({ name: "Store", params: { slug: currentSlug } });
+            router.push({ name: "Store", params: { storeSlug: storeSlug, eventSlug: eventSlug, eventId: eventId } });
         }
     },
 );

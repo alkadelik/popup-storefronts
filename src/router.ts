@@ -7,32 +7,32 @@ const routes = [
         redirect: "/not-found",
     },
     {
-        path: "/:storeSlug/events/:eventSlug",
+        path: "/:storeSlug/events/:eventSlug/:eventId",
         component: () => import("./views/StoreHome.vue"),
         name: "Store",
     },
     {
-        path: "/:storeSlug/events/:eventSlug/product",
+        path: "/:storeSlug/events/:eventSlug/:eventId/product",
         component: () => import("./views/ProductDetails.vue"),
         name: "ProductDetail",
     },
     {
-        path: "/:storeSlug/events/:eventSlug/cart",
+        path: "/:storeSlug/events/:eventSlug/:eventId/cart",
         component: () => import("./views/CartPage.vue"),
         name: "Cart",
     },
     {
-        path: "/:storeSlug/events/:eventSlug/store/order-successful/:id",
+        path: "/:storeSlug/events/:eventSlug/:eventId/store/order-successful/:id",
         component: () => import("./views/OrderSuccessful.vue"),
         name: "OrderSuccessful",
     },
     {
-        path: "/:storeSlug/events/:eventSlug/order/summary",
+        path: "/:storeSlug/events/:eventSlug/:eventId/order/summary",
         component: () => import("./views/OrderSummary.vue"),
         name: "OrderSummary",
     },
     {
-        path: "/:storeSlug/events/:eventSlug/order/shipping",
+        path: "/:storeSlug/events/:eventSlug/:eventId/order/shipping",
         component: () => import("./views/ShippingDetails.vue"),
         name: "ShippingDetails",
     },

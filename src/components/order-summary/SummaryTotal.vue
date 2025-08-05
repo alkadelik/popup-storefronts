@@ -11,7 +11,7 @@
         </div>
 
         <div class="flex justify-between py-3">
-            <router-link :to="{ name: 'Store', params: { storeSlug: storeSlug, eventSlug: eventSlug } }" class="w-[35%]">
+            <router-link :to="{ name: 'Store', params: { storeSlug: storeSlug, eventSlug: eventSlug, eventId: eventId } }" class="w-[35%]">
                 <button class="w-full bg-anti-flash-white text-black py-3 rounded-md">Back to Shop</button>
             </router-link>
             <button
@@ -36,6 +36,8 @@ import { useRoute } from "vue-router";
 const route = useRoute();
 const storeSlug = route.params.storeSlug;
 const eventSlug = route.params.eventSlug;
+const eventId = route.params.eventId;
+
 const { formatPrice, formatNaira } = useUtils();
 defineProps({
     totalProducts: Number,

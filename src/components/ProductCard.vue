@@ -9,6 +9,7 @@ import ProductImagePlaceholder from "./common/ProductImagePlaceholder.vue";
 const route = useRoute();
 const storeSlug = route.params.storeSlug;
 const eventSlug = route.params.eventSlug;
+const eventId = route.params.eventId;
 const { isProductInCart } = useCartStore();
 const { formatPricetoK } = useUtils();
 const productStore = useProductStore();
@@ -23,7 +24,7 @@ defineProps({
 
 <template>
     <RouterLink
-        :to="{ name: 'ProductDetail', params: { storeSlug: storeSlug, eventSlug: eventSlug }, hash: `#${product.id}` }"
+        :to="{ name: 'ProductDetail', params: { storeSlug: storeSlug, eventSlug: eventSlug, eventId: eventId }, hash: `#${product.id}` }"
         class="w-[32.5%] h-32 mb-0.5 rounded-sm relative"
     >
         <img

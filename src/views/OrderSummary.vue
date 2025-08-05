@@ -3,7 +3,7 @@
         <div class="h-16 px-4 flex justify-between items-center">
             <h6 class="font-normal">Order Summary</h6>
             <router-link
-                :to="{ name: 'Cart', params: { storeSlug: storeSlug, eventSlug: eventSlug } }"
+                :to="{ name: 'Cart', params: { storeSlug: storeSlug, eventSlug: eventSlug, eventId: eventId } }"
                 class="underline text-spanish-viridian text-xs"
                 >Edit All</router-link
             >
@@ -101,6 +101,7 @@ const toast = useToast();
 const queryClient = useQueryClient();
 const storeSlug = route.params.storeSlug;
 const eventSlug = route.params.eventSlug;
+const eventId = route.params.eventId;
 
 const { shippingDetails } = useOrderStore();
 const { cart, cartLength, cartTotal } = useCartStore();
@@ -212,7 +213,7 @@ const handleCheckout = () => {
         items: [...payloadItems],
         redirect_url: `${
             window.location.origin
-        }/${storeSlug}/events/${eventSlug}/store/order-successful/${orderRef.slice(-6)}`,
+        }/${storeSlug}/events/${eventSlug}/$${eventId}/store/order-successful/${orderRef.slice(-6)}`,
         event: storeInfo.event.id,
         payment_provider: paymentMethod.value === "Online" ? "paystack" : "cash",
     };
@@ -243,7 +244,7 @@ const handleCheckout = () => {
                 console.log("Offline order created successfully", res.data);
                 router.push({
                     name: "OrderSuccessful",
-                    params: { id: res.data.order_ref.slice(-6) },
+                    params: { storeSlug: storeSlug, eventSlug: eventSlug, eventId: eventId, id: res.data.order_ref.slice(-6) },
                 });
             }
         },

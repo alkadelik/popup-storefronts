@@ -1,6 +1,6 @@
 <template>
     <div :class="showText ? 'h-10 px-4' : 'h-10 w-10'">
-        <router-link :to="{ name: 'Cart', params: { storeSlug: storeSlug, eventSlug: eventSlug } }">
+        <router-link :to="{ name: 'Cart', params: { storeSlug: storeSlug, eventSlug: eventSlug, eventId: eventId } }">
             <button
                 class="bg-anti-flash-white rounded-sm w-full h-full flex items-center justify-center cursor-pointer relative"
                 :disabled="totalProducts === 0"
@@ -43,6 +43,7 @@ import { useRoute } from "vue-router";
 const route = useRoute();
 const storeSlug = route.params.storeSlug;
 const eventSlug = route.params.eventSlug;
+const eventId = route.params.eventId;
 
 const props = defineProps({
     totalProducts: {
