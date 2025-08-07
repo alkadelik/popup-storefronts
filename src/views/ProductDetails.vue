@@ -44,7 +44,7 @@
         <!--  -->
         <div class="h-15 shadow-[0px_-4px_8px_0px_#00000014] p-4 flex items-center">
             <div class="flex justify-end items-center w-full">
-                <CartButton :totalProducts="totalProducts" />
+                <FullCartButton :totalProducts="totalProducts" />
             </div>
         </div>
     </div>
@@ -57,7 +57,7 @@ import ToastSuccess from "../components/utils/ToastSuccess.vue";
 import ProductVariantsForm from "../components/product-details/ProductVariantsForm.vue";
 import ProductImage from "../components/product-details/ProductImage.vue";
 import ProductInfo from "../components/product-details/ProductInfo.vue";
-import CartButton from "../components/product-details/CartButton.vue";
+import FullCartButton from "../components/product-details/FullCartButton.vue";
 import { useProductStore } from "../stores/product";
 import { useToast } from "primevue/usetoast";
 import { useCartStore } from "../stores/cart";
