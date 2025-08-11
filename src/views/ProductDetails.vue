@@ -51,7 +51,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, computed } from "vue";
+import { ref, reactive, computed, onBeforeUnmount } from "vue";
 import Navbar from "../components/product-details/ProductNavbar.vue";
 import ToastSuccess from "../components/utils/ToastSuccess.vue";
 import ProductVariantsForm from "../components/product-details/ProductVariantsForm.vue";
@@ -76,6 +76,17 @@ const formState = reactive<
     Record<number | string, { variant1: string; variant2: string; variant3: string; quantity: number }>
 >({
     default: { variant1: "", variant2: "", variant3: "", quantity: 1 },
+});
+
+// lifecycle hooks
+onBeforeUnmount(() => {
+  // Reset all keys including 'default'
+  for (const key in formState) {
+    formState[key].variant1 = "";
+    formState[key].variant2 = "";
+    formState[key].variant3 = "";
+    formState[key].quantity = 1;
+  }
 });
 
 // computed properties
