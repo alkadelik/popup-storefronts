@@ -239,7 +239,7 @@ const handleCheckout = () => {
             console.log(paymentMethod.value, res.data);
 
             if (paymentMethod.value === "Online") {
-                window.location.href = `https://checkout.paystack.com/${res.data.access_code}`;
+                window.location.href = `https://checkout.paystack.com/${res.data.access_code.access_code}`;
             } else {
                 console.log("Offline order created successfully", res.data);
                 router.push({
