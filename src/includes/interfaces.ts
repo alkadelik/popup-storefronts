@@ -28,6 +28,7 @@ export interface StoreInfo {
             phone1?: string;
         };
     };
+    has_settlement_account: boolean;
     products: Product[];
 }
 

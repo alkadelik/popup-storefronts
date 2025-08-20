@@ -121,7 +121,7 @@ const totalAmount = computed(() => cart.reduce((sum, item) => sum + item.variant
 const totalProducts = computed(() => cart.reduce((sum, item) => sum + item.selected_quantity, 0));
 
 const canPayOnline = computed(
-    () => shippingDetails.firstName !== "" && shippingDetails.phoneNumber !== "" && shippingDetails.email !== "",
+    () => (shippingDetails.firstName !== "" && shippingDetails.phoneNumber !== "" && shippingDetails.email !== "") && storeInfo.has_settlement_account,
 );
 
 const uniqueProductCount = () => {
