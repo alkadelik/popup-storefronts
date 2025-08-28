@@ -223,13 +223,14 @@ const handleCheckout = () => {
     if (firstName !== "" && phoneNumber !== "" && email !== "") {
         payload.customer_info = customerInfo.value;
     } else {
-        payload.customer_info = {
-            first_name: "Unknown",
-            last_name: "Anonymous",
-            email: "hello+none@leyyow.com",
-            phone: "00000000000",
-            instagram_handle: "",
-        };
+        // payload.customer_info = {
+        //     first_name: "Unknown",
+        //     last_name: "Anonymous",
+        //     email: "hello+none@leyyow.com",
+        //     phone: "00000000000",
+        //     instagram_handle: "",
+        // };
+        payload.customer_info = null;
     }
 
     console.log(payload);
