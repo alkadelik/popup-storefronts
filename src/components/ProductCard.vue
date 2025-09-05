@@ -24,7 +24,11 @@ defineProps({
 
 <template>
     <RouterLink
-        :to="{ name: 'ProductDetail', params: { storeSlug: storeSlug, eventSlug: eventSlug, eventId: eventId }, hash: `#${product.id}` }"
+        :to="{
+            name: 'ProductDetail',
+            params: { storeSlug: storeSlug, eventSlug: eventSlug, eventId: eventId },
+            hash: `#${product.id}`,
+        }"
         class="w-[32.5%] h-32 mb-0.5 rounded-sm relative"
     >
         <img
@@ -79,11 +83,10 @@ defineProps({
             </svg>
         </div>
 
-        <!-- Price -->
+        <!-- Product Name -->
         <div class="w-full relative bottom-8 z-5 h-6 p-1">
             <p class="bg-white w-full text-center rounded-sm">
-                <small v-if="product.variants && product.variants.length">from </small>
-                <span v-html="formatPricetoK(product.price)"></span>
+                <span class="px-1 block truncate">{{ product.product_name }}</span>
             </p>
         </div>
     </RouterLink>
