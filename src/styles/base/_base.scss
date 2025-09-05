@@ -22,6 +22,15 @@ body {
 p {
     line-height: 1.5;
 
+    &.small {
+        $vw: 100vw;
+        font-size: calc($vw / 375px * 14px);
+
+        @include media(">=phone") {
+            font-size: calc($vw / 1220px * 14px);
+        }
+    }
+
     &.big {
         $vw: 100vw;
         font-size: calc($vw / 375px * 20px);

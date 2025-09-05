@@ -84,8 +84,8 @@ defineProps({
         </div>
 
         <!-- Product Name -->
-        <div class="w-full relative bottom-8 z-5 h-6 p-1">
-            <p class="bg-white w-full text-center rounded-sm">
+        <div class="w-full relative bottom-7 z-5 h-6 p-1">
+            <p class="bg-white w-full text-center rounded-sm small">
                 <span class="px-1 block truncate">{{ product.product_name }}</span>
             </p>
         </div>
