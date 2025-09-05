@@ -38,7 +38,7 @@ const handleShareClick = () => {
 <template>
     <div>
         <div class="flex py-3 justify-between items-center">
-            <h5 class="font-normal max-w-[80%]">{{ filteredProduct.product_name }}</h5>
+            <h6 class="font-normal max-w-[80%]">{{ filteredProduct.product_name }}</h6>
             <div>
                 <button
                     class="rounded-full w-10 h-10 border-platinum border flex justify-center items-center cursor-pointer"
@@ -81,10 +81,10 @@ const handleShareClick = () => {
         </div>
 
         <div class="flex gap-2 items-center justify-between">
-            <h5>
+            <h6>
                 <span v-if="hasVariants && !showStock" class="text-sm me-1">from </span>
                 <span v-html="formatPrice(props.price(props.filteredProduct))"></span>
-            </h5>
+            </h6>
 
             <!-- out of stock  -->
             <div
