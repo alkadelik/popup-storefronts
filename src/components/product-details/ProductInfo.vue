@@ -81,10 +81,17 @@ const handleShareClick = () => {
         </div>
 
         <div class="flex gap-2 items-center justify-between">
-            <h6>
-                <span v-if="hasVariants && !showStock" class="text-sm me-1">from </span>
-                <span v-html="formatPrice(props.price(props.filteredProduct))"></span>
-            </h6>
+            <div class="flex flex-col gap-2 w-full">
+                <h6
+                    class="text-spanish-viridian"
+                    :class="filteredProduct.description ? 'pb-4 border-b border-columbia-blue' : ''"
+                >
+                    <span v-if="hasVariants && !showStock" class="text-sm me-1">from </span>
+                    <span v-html="formatPrice(props.price)"></span>
+                </h6>
+
+                <p class="small text-dark-slate-gray">{{ filteredProduct.description }}</p>
+            </div>
 
             <!-- out of stock  -->
             <div
