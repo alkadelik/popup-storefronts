@@ -80,33 +80,35 @@ const handleShareClick = () => {
             </div>
         </div>
 
-        <div class="flex gap-2 items-center justify-between">
+        <div class="flex">
             <div class="flex flex-col gap-2 w-full">
-                <h6
-                    class="text-spanish-viridian"
+                <div
+                    class="flex items-center justify-between"
                     :class="filteredProduct.description ? 'pb-4 border-b border-columbia-blue' : ''"
                 >
-                    <span v-if="hasVariants && !showStock" class="text-sm me-1">from </span>
-                    <span v-html="formatPrice(props.price)"></span>
-                </h6>
+                    <h6 class="text-spanish-viridian">
+                        <span v-if="hasVariants && !showStock" class="text-sm me-1">from </span>
+                        <span v-html="formatPrice(props.price(props.filteredProduct))"></span>
+                    </h6>
+
+                    <!-- out of stock  -->
+                    <div
+                        class="px-1.5 py-0.5 text-white bg-orioles-orange rounded-sm w-auto flex justify-center items-center"
+                        v-if="stockLeft === 0 && showStock"
+                    >
+                        <small>Out of stock</small>
+                    </div>
+
+                    <!-- low in stock  -->
+                    <div
+                        class="px-1.5 py-0.5 text-white bg-vivid-gamboge rounded-sm w-auto flex justify-center items-center"
+                        v-else-if="stockLeft <= 5 && showStock"
+                    >
+                        <small>{{ stockLeft }} in stock</small>
+                    </div>
+                </div>
 
                 <p class="small text-dark-slate-gray">{{ filteredProduct.description }}</p>
-            </div>
-
-            <!-- out of stock  -->
-            <div
-                class="px-1.5 py-0.5 text-white bg-orioles-orange rounded-sm w-auto flex justify-center items-center"
-                v-if="stockLeft === 0 && showStock"
-            >
-                <small>Out of stock</small>
-            </div>
-
-            <!-- low in stock  -->
-            <div
-                class="px-1.5 py-0.5 text-white bg-vivid-gamboge rounded-sm w-auto flex justify-center items-center"
-                v-else-if="stockLeft <= 5 && showStock"
-            >
-                <small>{{ stockLeft }} in stock</small>
             </div>
         </div>
     </div>
