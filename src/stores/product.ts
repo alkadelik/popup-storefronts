@@ -87,6 +87,13 @@ export const useProductStore = defineStore("product", () => {
         inventory.value = [...originalInventory.value]; // Restore default order
     };
 
+    const updateInventory = (newInventory: Product[]) => {
+        originalInventory.value = [...newInventory]; // Update original order
+        inventory.value = [...newInventory]; // Update current inventory
+        resetSort(); // Reset sort to default
+        console.log("Inventory updated:", inventory.value);
+    };
+
     return {
         activeTab,
         searchInput,
@@ -96,5 +103,6 @@ export const useProductStore = defineStore("product", () => {
         sortOrder,
         filteredProducts,
         inventory,
+        updateInventory,
     };
 });
